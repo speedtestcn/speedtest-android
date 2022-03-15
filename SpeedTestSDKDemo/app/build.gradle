@@ -1,0 +1,86 @@
+apply plugin: 'com.android.application'
+
+android {
+  compileSdkVersion project.ext.compileSdkVersion
+  buildToolsVersion project.ext.buildToolsVersion
+  defaultConfig {
+    applicationId "com.tk.speedtest"
+    minSdkVersion project.ext.minSdkVersion
+    targetSdkVersion project.ext.targetSdkVersion
+    versionCode project.ext.versionCode
+    versionName project.ext.versionName
+    testInstrumentationRunner project.ext.testInstrumentationRunner
+    multiDexEnabled true
+  }
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  flavorDimensions "isui"
+  productFlavors {
+    ui {
+      dimension "isui"
+    }
+    noui{
+      dimension "isui"
+    }
+  }
+
+}
+
+dependencies {
+  implementation project.ext.appcompat
+  implementation project.ext.constraintlayout
+  testImplementation project.ext.testJunit
+  androidTestImplementation 'junit:junit:4.12'
+  androidTestImplementation project.ext.androidTestJunit
+  androidTestImplementation project.ext.androidTestEspresso
+  //implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+  implementation project.ext.recyclerview
+  implementation files('libs\\speedtest-sdk-debug.aar')
+  // okhttp
+  implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+  implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
+  // gson
+  implementation 'com.google.code.gson:gson:2.8.5'
+
+  // okhttp
+  implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+
+  // retrofit
+  implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+
+  // converter
+  implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+  // rx - adapter
+  implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+  //rx
+  implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+  implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
+
+
+  /*implementation project(path: ':speedtest-widget')
+  implementation project(path: ':speedtest-sdk')
+  implementation project(path: ':speedtest-auth')
+  implementation project(path: ':common-tool')
+  implementation project(path: ':speedtest-core')
+  implementation project(path: ':obj-cache-file')
+  implementation project(path: ':location-model')
+  implementation project(path: ':speedtest-data-provider')
+  implementation project(path: ':speedtest-event')
+  implementation project(path: ':speedtest-res')
+  implementation project(path: ':baseapp')
+  implementation project(path: ':speedtest-api')
+  implementation project(path: ':free-reflection')
+  implementation project(path: ':speedtest-bean')
+  implementation project(path: ':android-oaid')*/
+
+
+
+}
