@@ -32,8 +32,9 @@ dependencies {
 <a name="Od9HU"></a>
 ## 2、下载离线aar包进行集成
 
-1. 你需要下载SDK，下载链接请参见[SDK下载](https://help.aliyun.com/document_detail/71770.html#khd-sdk-1)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
-| **文件名称** | **文件路径** |
+1. 你需要下载SDK，下载链接请参见[SDK下载](https://b.speedtest.cn/speedtest-sdk)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
+
+| 文件名称 | 文件路径 |
 | --- | --- |
 | speedtest_cn_sdk_1.0.1.aar | /app/libs/ |
 
