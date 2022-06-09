@@ -6,7 +6,7 @@ buildscript {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven {
-            url 'http://58.56.1.54:7908/repository/speedtest/'
+            url 'http://58.56.1.54:7908/repository/speedtest-release/'
         }
     }
 
@@ -25,7 +25,7 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven {
-            url 'http://58.56.1.54:7908/repository/speedtest/'
+            url 'http://58.56.1.54:7908/repository/speedtest-release/'
         }
     }
 
