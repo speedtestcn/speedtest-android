@@ -20,7 +20,7 @@
 ```
 maven { url 'https://jitpack.io' } //如果app中已添加此处可忽略
 maven {
-        url 'http://58.56.1.54:7908/repository/speedtest/'
+        url 'http://58.56.1.54:7908/repository/speedtest-release/'
       }
 ```
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
