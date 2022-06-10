@@ -48,6 +48,40 @@ dependencies {
 }
 ```
 
+3. 添加所需的第三方包
+
+1）在**project**级别的**build.gradle**文件中添加Maven引用，示例如下：
+```
+maven { url 'https://jitpack.io' } //如果app中已添加此处可忽略
+```
+2）添加依赖
+```
+// gson
+implementation 'com.google.code.gson:gson:2.8.5'
+
+// okhttp
+implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+
+// retrofit
+implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+
+// converter
+implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+// rx - adapter
+implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+//rx
+implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
+
+//reflection
+implementation 'com.github.tiann:FreeReflection:3.1.0'
+
+//OAID
+implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
+```
+
 <a name="VVclD"></a>
 ## 防止代码混淆
 如果你使用的**离线aar方式集成**同时你的应用设置了混淆配置，需要进行以下配置。在proguard-rules.pro文件中，添加`-keep`类的配置，这样可以防止部分实体类被混淆。
