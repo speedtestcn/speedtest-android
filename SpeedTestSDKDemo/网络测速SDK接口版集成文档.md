@@ -84,7 +84,7 @@ implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
 
 <a name="VVclD"></a>
 ## 防止代码混淆
-如果你使用的**离线aar方式集成**同时你的应用设置了混淆配置，需要进行以下配置。在proguard-rules.pro文件中，添加`-keep`类的配置，这样可以防止部分实体类被混淆。
+如果你启用了proguard代码混淆，需要在proguard-rules.pro文件中，添加`-keep`类的配置，这样可以防止部分实体类被混淆。
 ```java
  #↓↓↓↓↓↓↓实体类↓↓↓↓↓↓↓
 -keep class com.speedtest.lib_api.http.bean.** { *; }
