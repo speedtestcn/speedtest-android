@@ -6,7 +6,7 @@
 
 | **类别** | **说明** |
 | --- | --- |
-| 系统版本 | 支持Android 7.0及以上 |
+| 系统版本 | 支持Android 4.4及以上 |
 | CPU架构 | 支持真机架构armeabi、armeabi-v7a、arm64-v8a |
 | 开发软件 | 确保使用Android Studio进行开发 |
 
