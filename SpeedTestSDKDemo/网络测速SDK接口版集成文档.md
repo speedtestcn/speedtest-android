@@ -20,13 +20,13 @@
 ```
 maven { url 'https://jitpack.io' } //如果app中已添加此处可忽略
 maven {
-        url 'http://58.56.1.54:7908/repository/speedtest-release/'
+        url 'https://repository.speedtest.cn/repository/speedtest-release/'
       }
 ```
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'com.juqing.speedtest:sdk-speedtest:1.0.1'
+     implementation 'com.juqing.speedtest:sdk-speedtest:1.0.2'
 }
 ```
 <a name="Od9HU"></a>
@@ -36,7 +36,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| speedtest_cn_sdk_1.0.1.aar | /app/libs/ |
+| speedtest_cn_sdk_1.0.2.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -44,7 +44,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网络测速SDK  
-    implementation files('libs\\speedtest-cn-sdk_1.0.1.aar')
+    implementation files('libs\\speedtest-cn-sdk_1.0.2.aar')
 }
 ```
 
