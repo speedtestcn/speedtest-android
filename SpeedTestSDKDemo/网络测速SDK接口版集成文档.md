@@ -29,7 +29,7 @@ dependencies {
      // 如果App主要针对国内用户，则依赖sdk-speedtest
      implementation 'com.juqing.speedtest:sdk-speedtest:1.0.3'
      //如果App主要针对海外用户，则依赖sdk-speedtest-foreign
-     implementation 'com.juqing.speedtest:sdk-speedtest-foreign:1.0.1'
+     implementation 'com.juqing.speedtest:sdk-speedtest-foreign:1.0.2'
 }
 ```
 <a name="Od9HU"></a>
