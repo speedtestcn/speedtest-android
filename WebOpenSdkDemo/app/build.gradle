@@ -38,4 +38,32 @@ dependencies {
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
     implementation 'com.juqing.speedtest:sdk-webopen:1.0.0'
+
+//    implementation files('libs\\sdk-webopen-1.0.0.aar')
+////
+//    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+//    // gson
+//    implementation 'com.google.code.gson:gson:2.8.5'
+//
+//// okhttp
+//    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+//
+//// retrofit
+//    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+//
+//// converter
+//    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+//
+//// rx - adapter
+//    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+//
+////rx
+//    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+//    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
+//
+//    //glide
+//    implementation 'com.github.bumptech.glide:glide:4.11.0'
+//
+//    //design
+//    implementation 'com.google.android.material:material:1.3.0'
 }

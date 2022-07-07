@@ -1,4 +1,4 @@
-本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用专项测速基本功能。
+本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用网页打开速度基本功能。
 
 <a name="ZShsl"></a>
 # 前提条件
@@ -26,7 +26,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'com.juqing.speedtest:sdk-combo:1.0.3'
+     implementation 'com.juqing.speedtest:sdk-webopen:1.0.0'
 }
 ```
 <a name="Od9HU"></a>
@@ -36,15 +36,15 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-combo-1.0.1.aar | /app/libs/ |
+| sdk-webopen-1.0.0.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
 ```java
 dependencies {   
         ...   
-    //依赖的专项测速SDK  
-    implementation files('libs\\sdk-combo-1.0.3.aar')
+    //依赖的网页打开速度SDK  
+    implementation files('libs\\sdk-webopen-1.0.0.aar')
 }
 ```
 
@@ -80,6 +80,9 @@ implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
 //glide
 implementation 'com.github.bumptech.glide:glide:4.11.0'
+
+//design
+implementation 'com.google.android.material:material:1.3.0'
 ```
 
 <a name="VVclD"></a>
@@ -122,29 +125,10 @@ SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
 ```java
 <fragment
         android:id="@+id/fragment"
-        class="com.speedtest.combo_sdk.ui.NetworkTestFragment"
+        class="com.speedtest.webopen_sdk.pick.PickWebFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 ```
-在Activity中添加以下初始化代码设置测速类型
-```java
-TaskTypeUtil.setTaskType(TaskType.LIVE_BROADCAST);
-```
-测速类型对应描述信息如下:
-
-| TaskType | 描述 |
-| --- | --- |
-| TaskType.LIVE_BROADCAST | 直播测速 |
-| TaskType.E_COMMERCE | 电商测速 |
-| TaskType.BUY_TICKETS | 购票测速 |
-| TaskType.NEWS_TEST | 资讯测速 |
-| TaskType.SEARCH_ENGINE | 搜索测速 |
-| TaskType.VIDEO_TEST | 视频测速 |
-| TaskType.RED_WAR | 抢红包测速 |
-| TaskType.ONLINE_CLASS | 上网课测速 |
-| TaskType.CLOUD_GAME | 云游戏测速 |
-| TaskType.PLAY_GAMES | 游戏测速 |
 
 <a name="2c6XJ"></a>
 ## Demo下载
