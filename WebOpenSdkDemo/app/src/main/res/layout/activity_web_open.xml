@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".WebOpenActivity">
 
-    <Button
-        android:id="@+id/btn_webopen"
+    <fragment
+        android:id="@+id/fragment"
+        class="com.speedtest.webopen_sdk.pick.PickWebFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="网页打开速度" />
+        android:layout_height="match_parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

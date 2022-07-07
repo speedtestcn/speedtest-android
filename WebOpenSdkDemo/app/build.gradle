@@ -37,4 +37,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
+    implementation 'com.juqing.speedtest:sdk-webopen:1.0.0'
 }
