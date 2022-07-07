@@ -1,4 +1,4 @@
-package com.speedtest.speedtest_sdk;
+package com.speedtest.combo_sdk_demo;
 
 import android.app.Application;
 import android.content.Context;
@@ -11,7 +11,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
+        SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
     }
 
     @Override
