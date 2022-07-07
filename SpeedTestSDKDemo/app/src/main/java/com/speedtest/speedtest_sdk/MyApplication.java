@@ -11,7 +11,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-//        SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
+        SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
     }
 
     @Override
