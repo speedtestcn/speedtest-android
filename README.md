@@ -8,4 +8,4 @@
 
 ## 相关文档
 + [网络测速sdk接口版集成文档](https://github.com/speedtestcn/speedtest-android/blob/main/SpeedTestSDKDemo/%E7%BD%91%E7%BB%9C%E6%B5%8B%E9%80%9FSDK%E6%8E%A5%E5%8F%A3%E7%89%88%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
-+ [专项（游戏、直播……）测速sdk集成文档](https://github.com/speedtestcn/speedtest-android/blob/main/ComboSdkDemo/%E7%BB%BC%E5%90%88%E3%80%81%E6%B8%B8%E6%88%8F%E6%B5%8B%E9%80%9FSDK%E6%8E%A5%E5%8F%A3%E7%89%88%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
++ [专项（游戏、直播……）测速sdk集成文档](https://github.com/speedtestcn/speedtest-android/blob/main/ComboSdkDemo/%E4%B8%93%E9%A1%B9%E6%B5%8B%E9%80%9FSDK%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
