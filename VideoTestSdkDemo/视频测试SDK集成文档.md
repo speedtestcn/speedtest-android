@@ -1,4 +1,4 @@
-本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用网页打开速度基本功能。
+本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用视频测试基本功能。
 
 <a name="ZShsl"></a>
 # 前提条件
@@ -26,7 +26,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'com.juqing.speedtest:sdk-webopen:1.0.0'
+     implementation 'com.juqing.speedtest:sdk-video:1.0.0'
 }
 ```
 <a name="Od9HU"></a>
@@ -36,7 +36,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-webopen-1.0.0.aar | /app/libs/ |
+| sdk-video-1.0.0.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -44,7 +44,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网页打开速度SDK  
-    implementation files('libs\\sdk-webopen-1.0.0.aar')
+    implementation files('libs\\sdk-video-1.0.0.aar')
 }
 ```
 
@@ -78,11 +78,11 @@ implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
-//glide
-implementation 'com.github.bumptech.glide:glide:4.11.0'
-
-//design
-implementation 'com.google.android.material:material:1.3.0'
+//ijkplayer
+implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.8'
+implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.8'
+implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.8'
+implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.8'
 ```
 
 <a name="VVclD"></a>
@@ -96,21 +96,6 @@ implementation 'com.google.android.material:material:1.3.0'
 }
 ```
 
-<a name="z0TsY"></a>
-## Android P/Android 9.0版本适配
-由于 Android P 限制了明文流量的网络请求，非加密的流量请求都会被系统禁止掉，所以需要再进行适配。适配方案如下： 在 res 下新建一个 xml 目录，然后创建一个xml文件，命名为network_security_config.xml ，该文件内容如下：
-```java
-<?xml version="1.0" encoding="utf-8"?>
-            <network-security-config>
-                <base-config cleartextTrafficPermitted="true" />
-            </network-security-config>
-```
-
-然后在 AndroidManifest.xml application 标签内应用上面的xml配置：
-```java
-android:networkSecurityConfig="@xml/network_security_config"
-```
-
 <a name="qI6In"></a>
 # 功能使用
 <a name="jjhaf"></a>
@@ -121,13 +106,29 @@ SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
 ```
 > `appId` 和 `key`是申请的应用的唯一标识，[点击获取](#)
 
+### 布局引用
 在Activity的布局文件中添加以下代码
 ```java
 <fragment
         android:id="@+id/fragment"
-        class="com.speedtest.webopen_sdk.pick.PickWebFragment"
+        class="com.speedtest.videotest_sdk.ui.VideoTestFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+```
+
+### AndroidManifest配置文件修改
+在AndroidManifest.xml配置文件中增加以下修改
+```java
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="###">
+
+
+    <uses-sdk tools:overrideLibrary="tv.danmaku.ijk.media.player_arm64" />
+
+    ...
+
+</manifest>
 ```
 
 <a name="2c6XJ"></a>

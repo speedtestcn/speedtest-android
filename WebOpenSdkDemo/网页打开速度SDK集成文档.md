@@ -121,6 +121,7 @@ SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
 ```
 > `appId` 和 `key`是申请的应用的唯一标识，[点击获取](#)
 
+### 布局引用
 在Activity的布局文件中添加以下代码
 ```java
 <fragment

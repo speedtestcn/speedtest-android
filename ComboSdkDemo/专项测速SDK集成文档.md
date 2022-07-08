@@ -118,16 +118,18 @@ SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
 ```
 > `appId` 和 `key`是申请的应用的唯一标识，[点击获取](#)
 
+### 布局引用
 在Activity的布局文件中添加以下代码
 ```java
 <fragment
         android:id="@+id/fragment"
         class="com.speedtest.combo_sdk.ui.NetworkTestFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent"/>
 ```
-在Activity中添加以下初始化代码设置测速类型
+
+### 设置专项测速类型
+在Activity中添加以下初始化代码设置专项测速类型
 ```java
 TaskTypeUtil.setTaskType(TaskType.LIVE_BROADCAST);
 ```
