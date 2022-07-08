@@ -11,3 +11,4 @@
 + [网络测速sdk接口版集成文档](https://github.com/speedtestcn/speedtest-android/blob/main/SpeedTestSDKDemo/%E7%BD%91%E7%BB%9C%E6%B5%8B%E9%80%9FSDK%E6%8E%A5%E5%8F%A3%E7%89%88%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
 + [专项（游戏、直播……）测速sdk集成文档](https://github.com/speedtestcn/speedtest-android/blob/main/ComboSdkDemo/%E4%B8%93%E9%A1%B9%E6%B5%8B%E9%80%9FSDK%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
 + [网页打开速度sdk集成文档](https://github.com/speedtestcn/speedtest-android/blob/main/WebOpenSdkDemo/%E7%BD%91%E9%A1%B5%E6%89%93%E5%BC%80%E9%80%9F%E5%BA%A6SDK%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
++ [视频测试sdk集成文档](https://github.com/speedtestcn/speedtest-android/blob/main/VideoTestSdkDemo/%E8%A7%86%E9%A2%91%E6%B5%8B%E8%AF%95SDK%E9%9B%86%E6%88%90%E6%96%87%E6%A1%A3.md)
