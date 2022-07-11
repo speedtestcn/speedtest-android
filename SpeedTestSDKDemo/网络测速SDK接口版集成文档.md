@@ -90,6 +90,7 @@ implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
 如果你启用了proguard代码混淆，需要在proguard-rules.pro文件中，添加`-keep`类的配置，这样可以防止部分实体类被混淆。
 ```java
  #↓↓↓↓↓↓↓实体类↓↓↓↓↓↓↓
+-dontoptimize
 -keep class com.speedtest.lib_api.http.bean.** { *; }
 -keep class * implements com.speedtest.lib_bean.IBean {
   *;
