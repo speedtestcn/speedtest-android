@@ -5,7 +5,7 @@ android {
     buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.speedtest.combosdk"
+        applicationId "com.speedtest.mobile_network_sdk_demo"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
@@ -64,7 +64,9 @@ dependencies {
 //    //OAID
 //    implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
 //
+////    constraintlayout
 //    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 //
+////    sticky_header
 //    implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.1'
 }

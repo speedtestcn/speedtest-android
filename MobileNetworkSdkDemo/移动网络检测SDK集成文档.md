@@ -1,4 +1,4 @@
-本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用测速基本功能。
+本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用移动网络检测基本功能。
 
 <a name="ZShsl"></a>
 # 前提条件
@@ -26,7 +26,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'com.juqing.speedtest:sdk-ui-speedtest:1.0.1'
+     implementation 'com.juqing.speedtest:sdk-mobile-network:1.0.0'
 }
 ```
 <a name="Od9HU"></a>
@@ -36,15 +36,15 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-ui-speedtest-1.0.1.aar | /app/libs/ |
+| sdk-mobile-network-1.0.0.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
 ```java
 dependencies {   
         ...   
-    //依赖的网络测速SDK  
-    implementation files('libs\\sdk-ui-speedtest-1.0.1.aar')
+    //依赖的移动网络检测SDK  
+    implementation files('libs\\sdk-mobile-network-1.0.0.aar')
 }
 ```
 
@@ -81,6 +81,12 @@ implementation 'com.github.tiann:FreeReflection:3.1.0'
 //OAID
 implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
 
+//constraintlayout 如果app中已添加此处可忽略
+implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+//sticky_header
+implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.1'
+
 //recyclerview 如果app中已添加此处可忽略
 implementation 'androidx.recyclerview:recyclerview:1.1.0'
 ```
@@ -96,20 +102,7 @@ implementation 'androidx.recyclerview:recyclerview:1.1.0'
   *;
 }
 ```
-<a name="z0TsY"></a>
-## Android P/Android 9.0版本适配
-由于 Android P 限制了明文流量的网络请求，非加密的流量请求都会被系统禁止掉，所以需要再进行适配。适配方案如下： 在 res 下新建一个 xml 目录，然后创建一个xml文件，命名为network_security_config.xml ，该文件内容如下：
-```java
-<?xml version="1.0" encoding="utf-8"?>
-            <network-security-config>
-                <base-config cleartextTrafficPermitted="true" />
-            </network-security-config>
-```
 
-然后在 AndroidManifest.xml application 标签内应用上面的xml配置：
-```java
-android:networkSecurityConfig="@xml/network_security_config"
-```
 <a name="qI6In"></a>
 # 功能使用
 <a name="jjhaf"></a>
@@ -126,7 +119,7 @@ SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
 ```java
 <fragment
         android:id="@+id/fragment"
-        class="com.speedtest.speedtest_ui_sdk.SpeedtestFragment"
+        class="com.speedtest.mobileweb_sdk.MobileWebDisplayFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 ```
