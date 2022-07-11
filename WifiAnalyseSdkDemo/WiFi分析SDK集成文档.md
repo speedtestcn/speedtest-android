@@ -1,4 +1,4 @@
-本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用全屋WiFi基本功能。
+本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用WiFi分析基本功能。
 
 <a name="ZShsl"></a>
 # 前提条件
@@ -43,7 +43,7 @@ dependencies {
 ```java
 dependencies {   
         ...   
-    //依赖的全屋WiFiSDK  
+    //依赖的WiFi分析SDK  
     implementation files('libs\\')
 }
 ```
@@ -78,24 +78,8 @@ implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
-//glide
-implementation 'com.github.bumptech.glide:glide:4.11.0'
-
-//smarttablayout
-implementation 'com.ogaclejapan.smarttablayout:library:2.0.0@aar'
-implementation 'com.ogaclejapan.smarttablayout:utils-v4:2.0.0@aar'
-
-//flexbox
-implementation 'com.google.android:flexbox:1.0.0'
-
-//PickerView
-implementation 'com.contrarywind:Android-PickerView:4.1.9'
-
-//cropper
-implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
-
-//Luban
-implementation 'top.zibin:Luban:1.1.8'
+//MPAndroidChart
+implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 ```
 
 <a name="VVclD"></a>
@@ -109,20 +93,7 @@ implementation 'top.zibin:Luban:1.1.8'
   *;
 }
 ```
-<a name="z0TsY"></a>
-## Android P/Android 9.0版本适配
-由于 Android P 限制了明文流量的网络请求，非加密的流量请求都会被系统禁止掉，所以需要再进行适配。适配方案如下： 在 res 下新建一个 xml 目录，然后创建一个xml文件，命名为network_security_config.xml ，该文件内容如下：
-```java
-<?xml version="1.0" encoding="utf-8"?>
-            <network-security-config>
-                <base-config cleartextTrafficPermitted="true" />
-            </network-security-config>
-```
 
-然后在 AndroidManifest.xml application 标签内应用上面的xml配置：
-```java
-android:networkSecurityConfig="@xml/network_security_config"
-```
 <a name="qI6In"></a>
 # 功能使用
 <a name="jjhaf"></a>
@@ -139,7 +110,7 @@ SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
 ```java
 <fragment
         android:id="@+id/fragment"
-        class="com.speedtest.housewifi_sdk.housewifi.help.HouseWifiHelpFragment"
+        class="com.speedtest.wifianalysis_sdk.WifiAnalysisFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 ```
