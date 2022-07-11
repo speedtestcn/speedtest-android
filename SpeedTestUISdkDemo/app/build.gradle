@@ -35,9 +35,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'com.juqing.speedtest:sdk-ui-speedtest:1.0.0'
+    implementation 'com.juqing.speedtest:sdk-ui-speedtest:1.0.1'
 
-//    implementation files('libs\\sdk-ui-speedtest-1.0.0.aar')
+//    implementation files('libs\\sdk-ui-speedtest-1.0.1.aar')
 ////
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 //    // gson
