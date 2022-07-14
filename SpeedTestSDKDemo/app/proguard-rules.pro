@@ -167,6 +167,7 @@ public void *(android.webkit.WebView, jav.lang.String);
 
 #----------------------------------------------------------------------------
 #↓↓↓↓↓↓↓实体类↓↓↓↓↓↓↓
+-dontoptimize
 -keep class com.speedtest.lib_api.http.bean.** { *; }
 -keep class * implements com.speedtest.lib_bean.IBean {
   *;
