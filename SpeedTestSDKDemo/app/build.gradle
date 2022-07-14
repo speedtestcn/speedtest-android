@@ -32,7 +32,7 @@ dependencies {
   androidTestImplementation project.ext.androidTestJunit
   androidTestImplementation project.ext.androidTestEspresso
 
-  implementation 'com.juqing.speedtest:sdk-speedtest:1.0.2'
+  implementation 'cn.speedtest:sdk-speedtest:1.0.6'
   //implementation files('libs\\speedtest-sdk-release.aar')
 
 }

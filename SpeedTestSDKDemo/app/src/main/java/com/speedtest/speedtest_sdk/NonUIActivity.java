@@ -18,10 +18,13 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
+import com.speedtest.lib_api.http.bean.LocationInfoBean;
 import com.speedtest.lib_api.http.bean.NodeListBean;
 import com.speedtest.lib_auth.SdkThrowable;
 import com.speedtest.lib_model.unit.SpeedUnit;
 import com.speedtest.speedtest_sdk.SpeedInterface;
+import com.speedtest.speedtest_sdk.callback.GetIpInfoCallback;
 import com.speedtest.speedtest_sdk.callback.GetNodeListCallback;
 import com.speedtest.speedtest_sdk.callback.PingCallback;
 import com.speedtest.speedtest_sdk.callback.SpeedtestCallback;
@@ -38,12 +41,14 @@ public class NonUIActivity extends AppCompatActivity {
     private Button startSpeedBtnKbs;
     private Button addTestNodes;
     private Button abortBtn;
+    private Button getIpBtn;
     private Button btnSkipToNodesSelect;
     private TextView editText;
     private TextView editUploadText;
     private TextView editPingText;
     private TextView editPingLossText;
     private TextView txtGetNodeText;
+    private TextView tvIpInfo;
     private EditText etHoldValue;
     private Switch switchAutoSpeed;
     private Switch switchFastSpeed;
@@ -77,6 +82,9 @@ public class NonUIActivity extends AppCompatActivity {
         switchAutoSpeed = findViewById(R.id.switch_auto_speed);
         switchFastSpeed = findViewById(R.id.switch_fast_speed);
         spinnerSelectNode = findViewById(R.id.spinner_select_node);
+        getIpBtn = findViewById(R.id.btn_get_ip);
+        tvIpInfo = findViewById(R.id.tv_ip_info);
+
         nodeListId = new ArrayList<String>();
         mNodeListBeans = new ArrayList<NodeListBean>();
         nodeListId.add("选择测速节点");
@@ -136,6 +144,23 @@ public class NonUIActivity extends AppCompatActivity {
             public void onClick(View v) {
                 page++;
                 addTestNode(page);
+            }
+        });
+
+        getIpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speedInterface.getIpLocation(new GetIpInfoCallback() {
+                    @Override
+                    public void onResult(LocationInfoBean locationInfoBean) {
+                        tvIpInfo.setText(new Gson().toJson(locationInfoBean));
+                    }
+
+                    @Override
+                    public void onError(SdkThrowable sdkThrowable) {
+                        Toast.makeText(NonUIActivity.this, sdkThrowable.code + sdkThrowable.msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
 
@@ -295,6 +320,7 @@ public class NonUIActivity extends AppCompatActivity {
             mHandler.sendMessage(msg);
         }
     };
+
 
     @Override
     protected void onDestroy() {

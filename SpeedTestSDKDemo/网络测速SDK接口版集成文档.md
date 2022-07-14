@@ -27,7 +27,7 @@ maven {
 ```
 dependencies {
      // 如果App主要针对国内用户，则依赖sdk-speedtest
-     implementation 'com.juqing.speedtest:sdk-speedtest:1.0.5'
+     implementation 'cn.speedtest:sdk-speedtest:1.0.6'
      //如果App主要针对海外用户，则依赖sdk-speedtest-foreign
      implementation 'com.juqing.speedtest:sdk-speedtest-foreign:1.0.5'
 }
@@ -261,6 +261,44 @@ public void setSelectNode(int nodeId) {
 public NodeListBean getSelectNode() {
   ...
 }
+```
+
+<a name="gufmf"></a>
+### 获取Ip&运营商信息
+通过getIpLocation接口，在GetIpInfoCallback回调获取Ip&运营商信息：
+```java
+//接口定义
+/**
+* @Description : 获取IP位置信息
+* @Params : callback
+*/
+public void getIpLocation(final GetIpInfoCallback callback) {
+  ...
+}
+//接口调用示例
+SpeedInterface.getSDK(context).getIpLocation(new GetIpInfoCallback() {
+  @Override
+  public void onResult(LocationInfoBean locationInfoBean) {
+    ...
+  }
+  @Override
+  public void onError(SdkThrowable sdkThrowable) {
+    ...
+  }
+});
+```
+```java
+//Ip信息对象
+  public class NodeListBean {
+    private String ip; //外部ip
+    private String country; //国家
+    private String countryCode; //国家码
+    private String province; //省
+    private String city; //市
+    private String district; //区
+    private String isp; //运营商信息
+    ...
+  }
 ```
 
 <a name="c9u8x"></a>
