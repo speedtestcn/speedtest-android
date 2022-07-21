@@ -26,7 +26,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-video:1.0.1'
+     implementation 'cn.speedtest:sdk-video:1.0.2'
 }
 ```
 <a name="Od9HU"></a>
@@ -36,7 +36,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-video-1.0.1.aar | /app/libs/ |
+| sdk-video-1.0.2.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -44,7 +44,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网页打开速度SDK  
-    implementation files('libs\\sdk-video-1.0.1.aar')
+    implementation files('libs\\sdk-video-1.0.2.aar')
 }
 ```
 
@@ -117,20 +117,6 @@ SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
         android:layout_height="match_parent" />
 ```
 
-### AndroidManifest配置文件修改
-在AndroidManifest.xml配置文件中增加以下修改
-```java
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="###">
-
-
-    <uses-sdk tools:overrideLibrary="tv.danmaku.ijk.media.player_arm64" />
-
-    ...
-
-</manifest>
-```
 
 <a name="2c6XJ"></a>
 ## Demo下载
