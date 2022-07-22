@@ -35,7 +35,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'com.juqing.speedtest:sdk-housewifi:1.0.0'
+    implementation 'cn.speedtest:sdk-housewifi:1.0.1'
 
 //    implementation files('libs\\housewifi-sdk-release.aar')
 ////

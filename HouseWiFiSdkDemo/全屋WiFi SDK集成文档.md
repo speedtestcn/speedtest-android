@@ -26,7 +26,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'com.juqing.speedtest:sdk-housewifi:1.0.0'
+     implementation 'cn.speedtest:sdk-housewifi:1.0.1'
 }
 ```
 <a name="Od9HU"></a>
@@ -36,7 +36,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-housewifi-1.0.0.aar | /app/libs/ |
+| sdk-housewifi-1.0.1.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -44,7 +44,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的全屋WiFiSDK  
-    implementation files('libs\\sdk-housewifi-1.0.0.aar')
+    implementation files('libs\\sdk-housewifi-1.0.1.aar')
 }
 ```
 
@@ -108,6 +108,8 @@ implementation 'top.zibin:Luban:1.1.8'
 -keep class * implements com.speedtest.lib_bean.IBean {
   *;
 }
+-keep class * implements com.contrarywind.interfaces.IPickerViewData {*;}
+-keep class com.speedtest.housewifi_sdk.housewifi.recognize.JsonBean$* {*;}
 ```
 <a name="z0TsY"></a>
 ## Android P/Android 9.0版本适配
