@@ -26,9 +26,11 @@ import com.speedtest.lib_model.unit.SpeedUnit;
 import com.speedtest.speedtest_sdk.SpeedInterface;
 import com.speedtest.speedtest_sdk.callback.GetIpInfoCallback;
 import com.speedtest.speedtest_sdk.callback.GetNodeListCallback;
+import com.speedtest.speedtest_sdk.callback.GetSpeedExtraCallback;
 import com.speedtest.speedtest_sdk.callback.PingCallback;
 import com.speedtest.speedtest_sdk.callback.SpeedtestCallback;
 import com.speedtest.speedtest_sdk.data.PingResultData;
+import com.speedtest.speedtest_sdk.data.SpeedExtraData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +51,7 @@ public class NonUIActivity extends AppCompatActivity {
     private TextView editPingLossText;
     private TextView txtGetNodeText;
     private TextView tvIpInfo;
+    private TextView tvSpeedExtraResultText;
     private EditText etHoldValue;
     private Switch switchAutoSpeed;
     private Switch switchFastSpeed;
@@ -74,6 +77,7 @@ public class NonUIActivity extends AppCompatActivity {
         addTestNodes = findViewById(R.id.btn_add_nodes);
         abortBtn = findViewById(R.id.btn_abort);
         editText = findViewById(R.id.edt_result);
+        tvSpeedExtraResultText = findViewById(R.id.tv_speed_extra_result);
         editUploadText = findViewById(R.id.edt_upload_result);
         editPingText = findViewById(R.id.edt_ping_result);
         editPingLossText = findViewById(R.id.edt_ping_loss_result);
@@ -118,6 +122,24 @@ public class NonUIActivity extends AppCompatActivity {
                         });
                     }
                 });
+            }
+        });
+
+        speedInterface.getSpeedExtraData(new GetSpeedExtraCallback() {
+            @Override
+            public void onResult(SpeedExtraData speedExtraData) {
+                Message msg = mHandler.obtainMessage();
+                msg.what = 11;
+                msg.obj = speedExtraData;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onError(SdkThrowable sdkThrowable) {
+                Message msg = mHandler.obtainMessage();
+                msg.obj = sdkThrowable;
+                msg.what = 12;
+                mHandler.sendMessage(msg);
             }
         });
 
@@ -339,13 +361,13 @@ public class NonUIActivity extends AppCompatActivity {
                     editPingText.setText("Ping Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code + ((SdkThrowable)msg.obj).msg);
                     break;
                 case 2:
-                    editPingLossText.setText("丢包：-----------" + msg.obj.toString() +"\n");
+                    editPingLossText.setText("丢包：>>>>>>>" + msg.obj.toString() +"\n");
                     break;
                 case 3:
                     editText.setText("Start SpeedTest Download:---------------------"+"\n");
                     break;
                 case 4:
-                    editText.append(msg.obj.toString() + "\n");
+                    editText.setText(msg.obj.toString() + "\n");
                     break;
                 case 5:
                     editText.setText("End SpeedTest Download:---------------------次数："+ downCount +"\n" + msg.obj.toString());
@@ -357,13 +379,25 @@ public class NonUIActivity extends AppCompatActivity {
                     editUploadText.setText("Start SpeedTest Upload:---------------------"+"\n");
                     break;
                 case 8:
-                    editUploadText.append(msg.obj.toString() + "\n");
+                    editUploadText.setText(msg.obj.toString() + "\n");
                     break;
                 case 9:
                     editUploadText.setText("End SpeedTest Upload:---------------------次数："+ upCount +"\n" + msg.obj.toString());
                     break;
                 case 10:
                     editUploadText.setText("Upload Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code + ((SdkThrowable)msg.obj).msg);
+                    break;
+                case 11:
+                    SpeedExtraData extraData = (SpeedExtraData)msg.obj;
+                    tvSpeedExtraResultText.setText("下载速率峰值：" + extraData.downloadCrest + "  上传速率峰值：" + extraData.uploadCrest + "\n"+
+                        "下载忙时时延最大值：" + extraData.getBusyDownloadPingMax() + "  上传忙时时延最大值：" + extraData.getBusyUploadPingMax() + "\n"+
+                        "下载忙时时延最小值：" + extraData.getBusyDownloadPingMin() + "  上传忙时时延最小值：" + extraData.getBusyUploadPingMin()+ "\n" +
+                        "下载忙时时延：" + extraData.getBusyDownloadPing() + "  上传忙时时延：" + extraData.getBusyUploadPing() + "\n"+
+                        "闲时时延最大值：" + extraData.getMaxPing() + "  闲时时延最小值：" + extraData.getMinPing() + "\n"+
+                        "下载忙时抖动：" + extraData.getBusyDownloadJitter() + "  上传忙时抖动：" + extraData.getBusyUploadJitter());
+                    break;
+                case 12:
+                    tvSpeedExtraResultText.setText("Download Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code + ((SdkThrowable)msg.obj).msg);
                     break;
                 default:
                     break;

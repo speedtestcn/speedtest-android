@@ -27,7 +27,7 @@ maven {
 ```
 dependencies {
      // 如果App主要针对国内用户，则依赖sdk-speedtest
-     implementation 'cn.speedtest:sdk-speedtest:1.0.7'
+     implementation 'cn.speedtest:sdk-speedtest:1.1.0'
      //如果App主要针对海外用户，则依赖sdk-speedtest-foreign
      implementation 'com.juqing.speedtest:sdk-speedtest-foreign:1.0.5'
 }
@@ -39,7 +39,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| speedtest_cn_sdk_1.0.2.aar | /app/libs/ |
+| speedtest_cn_sdk_1.1.0.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -47,7 +47,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网络测速SDK  
-    implementation files('libs\\speedtest-cn-sdk_1.0.2.aar')
+    implementation files('libs\\speedtest-cn-sdk_1.1.0.aar')
 }
 ```
 
@@ -300,6 +300,47 @@ SpeedInterface.getSDK(context).getIpLocation(new GetIpInfoCallback() {
     private String isp; //运营商信息
     ...
   }
+```
+### 获取测速过程信息
+通过getSpeedExtraData接口，在GetSpeedExtraCallback回调获取测速过程信息：
+```java
+//接口定义
+/**
+* @Description : 获取测速过程信息
+* @Params : callback
+*/
+public void getIpLocation(final GetIpInfoCallback callback) {
+  ...
+}
+//接口调用示例
+SpeedInterface.getSDK(context).getSpeedExtraData(new GetSpeedExtraCallback() {
+  @Override
+  public void onResult(SpeedExtraData speedExtraData) {
+    ...
+  }
+  @Override
+  public void onError(SdkThrowable sdkThrowable) {
+    ...
+  }
+});
+```
+```java
+//测速过程信息对象
+public class NodeListBean {
+   private float downloadCrest; //下载速率峰值Mbps
+   private float uploadCrest; //上传速率峰值Mbps
+   private long minPing; //闲时时延最小值
+   private long maxPing; //闲时时延最大值
+   private long busyDownloadPing; //忙时时延（下载）
+   private long busyUploadPing; //忙时时延（上传）
+   private long busyDownloadPingMin; //忙时时延（下载）最小值
+   private long busyUploadPingMin; //忙时时延（上传）最小值
+   private long busyDownloadPingMax; //忙时时延（下载）最大值
+   private long busyUploadPingMax; //忙时时延（上传）最大值
+   private float busyDownloadJitter; //忙时抖动（下载）
+   private float busyUploadJitter; //忙时抖动（上传）
+    ...
+}
 ```
 
 <a name="c9u8x"></a>
