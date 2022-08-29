@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.speedtest.videotest_sdk_demo">
-    <uses-sdk tools:overrideLibrary="tv.danmaku.ijk.media.player_arm64" />
 
     <application
         android:name=".MyApplication"

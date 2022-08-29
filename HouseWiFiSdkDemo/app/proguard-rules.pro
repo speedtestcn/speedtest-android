@@ -172,3 +172,5 @@ public void *(android.webkit.WebView, jav.lang.String);
 -keep class * implements com.speedtest.lib_bean.IBean {
   *;
 }
+-keep class * implements com.contrarywind.interfaces.IPickerViewData {*;}
+-keep class com.speedtest.housewifi_sdk.housewifi.recognize.JsonBean$* {*;}

@@ -35,7 +35,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'com.juqing.speedtest:sdk-combo:1.0.3'
+    implementation 'cn.speedtest:sdk-combo:1.0.5'
 
 
 //    implementation files('libs\\combo-sdk-release.aar')
