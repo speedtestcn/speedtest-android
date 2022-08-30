@@ -36,7 +36,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-combo-1.0.5.aar | /app/libs/ |
+| sdk-combo-1.0.7.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -44,7 +44,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的专项测速SDK  
-    implementation files('libs\\sdk-combo-1.0.5.aar')
+    implementation files('libs\\sdk-combo-1.0.7.aar')
 }
 ```
 

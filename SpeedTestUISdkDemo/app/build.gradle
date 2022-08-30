@@ -5,7 +5,7 @@ android {
     buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.speedtest.speedtestui_sdk_demo"
+        applicationId "com.speedtest.combosdk"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
@@ -35,7 +35,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'cn.speedtest:sdk-ui-speedtest:1.0.4'
+    implementation 'cn.speedtest:sdk-ui-speedtest:1.0.5'
 
 //    implementation files('libs\\speedtest-ui-sdk-release.aar')
 ////
