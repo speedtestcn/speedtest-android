@@ -35,7 +35,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'cn.speedtest:sdk-video:1.0.2'
+    implementation 'cn.speedtest:sdk-video:1.0.3'
 
 //    implementation files('libs\\videotest-sdk-release.aar')
 ////
