@@ -26,7 +26,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-webopen:1.0.2'
+     implementation 'cn.speedtest:sdk-webopen:1.0.4'
 }
 ```
 <a name="Od9HU"></a>
@@ -44,7 +44,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网页打开速度SDK  
-    implementation files('libs\\sdk-webopen-1.0.3.aar')
+    implementation files('libs\\sdk-webopen-1.0.4.aar')
 }
 ```
 
