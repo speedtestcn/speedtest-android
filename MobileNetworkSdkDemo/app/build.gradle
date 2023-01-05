@@ -34,7 +34,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'com.juqing.speedtest:sdk-mobile-network:1.0.0'
+    implementation 'cn.speedtest:sdk-mobile-network:1.0.1'
 
 //    implementation files('libs\\mobileweb-sdk-release.aar')
 ////

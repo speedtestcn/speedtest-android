@@ -36,7 +36,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-webopen-1.0.3.aar | /app/libs/ |
+| sdk-webopen-1.0.4.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：

@@ -26,7 +26,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-combo:1.0.5'
+     implementation 'cn.speedtest:sdk-combo:1.0.7'
 }
 ```
 <a name="Od9HU"></a>
