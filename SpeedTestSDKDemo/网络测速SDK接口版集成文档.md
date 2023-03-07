@@ -128,19 +128,6 @@ SpeedInterface初始化，获取全局SpeedInterface对象：
   SpeedInterface.getSDK(Context context)
 ```
 
-<a name="cu60d"></a>
-### 配置快速测速（可选）
-SpeedInterface配置是否启用快速测速（fastSpeed），设置为true为启用快速测速，默认关闭。快速测速可以减少流量消耗，在移动网络测速时建议开启。
-
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-| --- | --- | --- | --- | --- |
-| fastSpeed | 快速测速 | boolean | true/false | false |
-
-
-**示例代码：**
-```java
-SpeedInterface.getSDK(Context context).fastSpeed(boolean fastSpeed);
-```
 <a name="ZQ3KI"></a>
 ### 测速接口定义
 测速接口startSpeedTest调用内部会执行Ping、下载以及上传，执行获取的数据通过回调返回给接口调用者，接口定义如下：
