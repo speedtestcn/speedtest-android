@@ -26,7 +26,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-housewifi:1.0.1'
+     implementation 'cn.speedtest:sdk-housewifi:1.0.2'
 }
 ```
 <a name="Od9HU"></a>
@@ -36,7 +36,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-housewifi-1.0.1.aar | /app/libs/ |
+| sdk-housewifi-1.0.2.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -44,7 +44,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的全屋WiFiSDK  
-    implementation files('libs\\sdk-housewifi-1.0.1.aar')
+    implementation files('libs\\sdk-housewifi-1.0.2.aar')
 }
 ```
 
@@ -128,6 +128,12 @@ android:networkSecurityConfig="@xml/network_security_config"
 <a name="qI6In"></a>
 # 功能使用
 <a name="jjhaf"></a>
+### 权限申请
+功能使用前需要申请所需要的权限，以保证功能可以正常使用
+| 权限 |
+| --- |
+| ACCESS_FINE_LOCATION |
+| ACCESS_COARSE_LOCATION |
 ### SDK初始化
 执行初始化需要使用开发者申请应用得到 `appId` 和 `key`，在Application或者主Activity中加入以下(推荐在Application中加入以下初始化代码，初始化不会执行任何耗时操作，不用担心影响App启动速度：
 ```java
