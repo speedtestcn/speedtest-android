@@ -169,8 +169,23 @@ private PingCallback pingCallback = new PingCallback() {
     public void onPckLoss(double pckLoss) {
         LogUtil.d("Ping pckLoss Value：" + pckLoss +"\n");
     }
+    @Override
+    public void onProcessState(SpeedtestState speedtestState) {
+        LogUtil.d("ProcessState Value：" + speedtestState +"\n");
+   }
 };
 ```
+测速过程状态对应描述信息如下:
+
+| SpeedtestState | 描述 |
+| --- | --- |
+| SpeedtestState.SPEEDTEST_STATUS_AUTH | 权限校验 |
+| SpeedtestState.SPEEDTEST_STATUS_SELECT_NODE | 选择节点 |
+| SpeedtestState.SPEEDTEST_STATUS_PING | PING |
+| SpeedtestState.SPEEDTEST_STATUS_DOWNLOAD | 下载测速 |
+| SpeedtestState.SPEEDTEST_STATUS_UPLOAD | 上传测速 |
+| SpeedtestState.SPEEDTEST_STATUS_END | 测速结束 |
+
 ```java
 private SpeedtestCallback downloadCallback = new SpeedtestCallback() {
     @Override
