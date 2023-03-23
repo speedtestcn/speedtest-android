@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+      android:visibility="gone">
         <EditText
             android:id="@+id/et_hold_value"
             android:layout_width="100dp"
