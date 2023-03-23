@@ -88,6 +88,13 @@
         android:layout_height="wrap_content"
 
         />
+
+    <TextView
+      android:id="@+id/edt_process_state"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+
     <TextView
       android:id="@+id/edt_ping_loss_result"
       android:layout_width="match_parent"

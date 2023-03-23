@@ -26,7 +26,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-video:1.0.3'
+     implementation 'cn.speedtest:sdk-video:1.0.4'
 }
 ```
 <a name="Od9HU"></a>
@@ -36,15 +36,15 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-video-1.0.3.aar | /app/libs/ |
+| sdk-video-1.0.4.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
 ```java
 dependencies {   
         ...   
-    //依赖的网页打开速度SDK  
-    implementation files('libs\\sdk-video-1.0.3.aar')
+    //依赖的视频测试SDK  
+    implementation files('libs\\sdk-video-1.0.4.aar')
 }
 ```
 

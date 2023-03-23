@@ -4,7 +4,7 @@ android {
   compileSdkVersion project.ext.compileSdkVersion
   buildToolsVersion project.ext.buildToolsVersion
   defaultConfig {
-    applicationId "com.speedtest.allsdk"
+    applicationId "com.speedtest.combosdk"
     minSdkVersion project.ext.minSdkVersion
     targetSdkVersion project.ext.targetSdkVersion
     versionCode project.ext.versionCode
@@ -32,6 +32,6 @@ dependencies {
   androidTestImplementation project.ext.androidTestJunit
   androidTestImplementation project.ext.androidTestEspresso
 
-  implementation 'cn.speedtest:sdk-speedtest:1.1.1'
+  implementation 'cn.speedtest:sdk-speedtest:1.1.3'
 
 }
