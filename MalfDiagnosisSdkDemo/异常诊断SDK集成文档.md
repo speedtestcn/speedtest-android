@@ -1,4 +1,4 @@
-本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用专项测速基本功能。
+本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用异常诊断基本功能。
 
 <a name="ZShsl"></a>
 # 前提条件
@@ -43,7 +43,7 @@ dependencies {
 ```java
 dependencies {   
         ...   
-    //依赖的专项测速SDK  
+    //依赖的异常诊断SDK  
     implementation files('libs\\sdk-malfdiagnosis-1.0.1.aar')
 }
 ```
