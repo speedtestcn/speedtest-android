@@ -27,7 +27,7 @@ maven {
 ```
 dependencies {
      // 如果App主要针对国内用户，则依赖sdk-speedtest
-     implementation 'cn.speedtest:sdk-speedtest:1.1.3'
+     implementation 'cn.speedtest:sdk-speedtest:1.1.5'
      //如果App主要针对海外用户，则依赖sdk-speedtest-foreign
      implementation 'com.juqing.speedtest:sdk-speedtest-foreign:1.0.5'
 }
@@ -39,7 +39,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| speedtest_cn_sdk_1.1.3.aar | /app/libs/ |
+| speedtest_cn_sdk_1.1.5.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -47,7 +47,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网络测速SDK  
-    implementation files('libs\\speedtest-cn-sdk_1.1.3.aar')
+    implementation files('libs\\speedtest-cn-sdk_1.1.5.aar')
 }
 ```
 
@@ -184,6 +184,7 @@ private PingCallback pingCallback = new PingCallback() {
 | SpeedtestState.SPEEDTEST_STATUS_PING | PING |
 | SpeedtestState.SPEEDTEST_STATUS_DOWNLOAD | 下载测速 |
 | SpeedtestState.SPEEDTEST_STATUS_UPLOAD | 上传测速 |
+| SpeedtestState.SPEEDTEST_STATUS_SPECIAL_TEST | 加测 |
 | SpeedtestState.SPEEDTEST_STATUS_END | 测速结束 |
 
 ```java
@@ -318,7 +319,7 @@ SpeedInterface.getSDK(context).getIpLocation(new GetIpInfoCallback() {
 * @Description : 获取测速过程信息
 * @Params : callback
 */
-public void getIpLocation(final GetIpInfoCallback callback) {
+public void getSpeedExtraData(final GetSpeedExtraCallback callback) {
   ...
 }
 //接口调用示例
@@ -350,6 +351,31 @@ public class NodeListBean {
    private float busyUploadJitter; //忙时抖动（上传）
     ...
 }
+```
+
+### 获取加测结果
+通过setSpecialTestCallback接口，在SpecialTestCallback回调获取加测结果：
+```java
+//接口定义
+/**
+   * 通过回调获取加测结果
+   * @param callback
+   */
+  public void setSpecialTestCallback(SpecialTestCallback callback) {
+    ...
+  }
+//接口调用示例
+SpeedInterface.getSDK(context).setSpecialTestCallback(new SpecialTestCallback() {
+            @Override
+            public void onResult(String toolName, long avgVal) {
+                ...
+            }
+
+            @Override
+            public void onError(SdkThrowable throwable) {
+                ...
+            }
+        });
 ```
 
 <a name="c9u8x"></a>

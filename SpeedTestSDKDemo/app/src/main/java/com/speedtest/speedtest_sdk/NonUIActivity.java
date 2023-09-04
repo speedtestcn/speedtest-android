@@ -28,6 +28,7 @@ import com.speedtest.speedtest_sdk.callback.GetIpInfoCallback;
 import com.speedtest.speedtest_sdk.callback.GetNodeListCallback;
 import com.speedtest.speedtest_sdk.callback.GetSpeedExtraCallback;
 import com.speedtest.speedtest_sdk.callback.PingCallback;
+import com.speedtest.speedtest_sdk.callback.SpecialTestCallback;
 import com.speedtest.speedtest_sdk.callback.SpeedtestCallback;
 import com.speedtest.speedtest_sdk.data.PingResultData;
 import com.speedtest.speedtest_sdk.data.SpeedExtraData;
@@ -51,6 +52,7 @@ public class NonUIActivity extends AppCompatActivity {
     private TextView editPingText;
     private TextView editPingLossText;
     private TextView txtGetNodeText;
+    private TextView tvSpecialTestResult;
     private TextView tvIpInfo;
     private TextView tvSpeedExtraResultText;
     private TextView editProcessStateText;
@@ -92,6 +94,7 @@ public class NonUIActivity extends AppCompatActivity {
         getIpBtn = findViewById(R.id.btn_get_ip);
         tvIpInfo = findViewById(R.id.tv_ip_info);
         editProcessStateText = findViewById(R.id.edt_process_state);
+        tvSpecialTestResult = findViewById(R.id.tv_special_test_result);
 
         nodeListId = new ArrayList<String>();
         mNodeListBeans = new ArrayList<NodeListBean>();
@@ -144,6 +147,25 @@ public class NonUIActivity extends AppCompatActivity {
                 Message msg = mHandler.obtainMessage();
                 msg.obj = sdkThrowable;
                 msg.what = 12;
+                mHandler.sendMessage(msg);
+            }
+        });
+
+        speedInterface.setSpecialTestCallback(new SpecialTestCallback() {
+            @Override
+            public void onResult(String toolName, long avgVal) {
+                Message msg = mHandler.obtainMessage();
+                msg.what = 14;
+                msg.obj = toolName;
+                msg.arg1 = (int) avgVal;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onError(SdkThrowable throwable) {
+                Message msg = mHandler.obtainMessage();
+                msg.obj = throwable;
+                msg.what = 15;
                 mHandler.sendMessage(msg);
             }
         });
@@ -402,7 +424,7 @@ public class NonUIActivity extends AppCompatActivity {
                     break;
                 case 11:
                     SpeedExtraData extraData = (SpeedExtraData)msg.obj;
-                    tvSpeedExtraResultText.setText("下载速率峰值：" + extraData.downloadCrest + "  上传速率峰值：" + extraData.uploadCrest + "\n"+
+                    tvSpeedExtraResultText.setText("下载速率峰值：" + extraData.getDownloadCrest() + "  上传速率峰值：" + extraData.getUploadCrest() + "\n"+
                         "下载忙时时延最大值：" + extraData.getBusyDownloadPingMax() + "  上传忙时时延最大值：" + extraData.getBusyUploadPingMax() + "\n"+
                         "下载忙时时延最小值：" + extraData.getBusyDownloadPingMin() + "  上传忙时时延最小值：" + extraData.getBusyUploadPingMin()+ "\n" +
                         "下载忙时时延：" + extraData.getBusyDownloadPing() + "  上传忙时时延：" + extraData.getBusyUploadPing() + "\n"+
@@ -414,6 +436,12 @@ public class NonUIActivity extends AppCompatActivity {
                     break;
                 case 13:
                     editProcessStateText.setText("SpeedTest Process State:" + (SpeedtestState)msg.obj);
+                    break;
+                case 14:
+                    tvSpecialTestResult.append("加测名称：" + (String) msg.obj + "，测试平均时间（ms）：" + msg.arg1 + "\n");
+                    break;
+                case 15:
+                    tvSpecialTestResult.setText("加测 Occur Error：---------------------" + ((SdkThrowable)msg.obj).code + ((SdkThrowable)msg.obj).msg);
                     break;
                 default:
                     break;
@@ -428,5 +456,6 @@ public class NonUIActivity extends AppCompatActivity {
         editUploadText.setText("");
         tvSpeedExtraResultText.setText("");
         editProcessStateText.setText("");
+        tvSpecialTestResult.setText("");
     }
 }
