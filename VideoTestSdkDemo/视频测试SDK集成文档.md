@@ -1,6 +1,8 @@
 本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用视频测试基本功能。
 
-sdk合规使用指引：[https://b.speedtest.cn/compliance/](https://b.speedtest.cn/compliance/)
+## sdk合规使用指引
+[https://b.speedtest.cn/compliance/](https://b.speedtest.cn/compliance/)
+
 <a name="ZShsl"></a>
 # 前提条件
 开发前的环境要求如下表所示
