@@ -30,7 +30,7 @@ maven {
 ```
 dependencies {
      // 如果App主要针对国内用户，则依赖sdk-speedtest
-     implementation 'cn.speedtest:sdk-speedtest:1.1.5'
+     implementation 'cn.speedtest:sdk-speedtest:1.1.6'
      //如果App主要针对海外用户，则依赖sdk-speedtest-foreign
      implementation 'com.juqing.speedtest:sdk-speedtest-foreign:1.0.5'
 }
@@ -42,7 +42,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| speedtest_cn_sdk_1.1.5.aar | /app/libs/ |
+| speedtest_cn_sdk_1.1.6.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -50,7 +50,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网络测速SDK  
-    implementation files('libs\\speedtest-cn-sdk_1.1.5.aar')
+    implementation files('libs\\speedtest-cn-sdk_1.1.6.aar')
 }
 ```
 
