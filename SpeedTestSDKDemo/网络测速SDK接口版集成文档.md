@@ -1,5 +1,7 @@
 本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用测速基本功能。
 
+sdk合规使用指引：https://b.speedtest.cn/compliance/
+
 <a name="ZShsl"></a>
 # 前提条件
 开发前的环境要求如下表所示
@@ -366,31 +368,17 @@ public class NodeListBean {
   }
 //接口调用示例
 SpeedInterface.getSDK(context).setSpecialTestCallback(new SpecialTestCallback() {
-    @Override
-    public void onResult(String toolName, long avgVal) {
-        ...
-    }
+            @Override
+            public void onResult(String toolName, long avgVal) {
+                ...
+            }
 
-    @Override
-    public void onError(SdkThrowable throwable) {
-        ...
-    }
-});
+            @Override
+            public void onError(SdkThrowable throwable) {
+                ...
+            }
+        });
 ```
-toolName对应描述信息如下:
-
-| toolName | 描述 |
-| --- | --- |
-| game-add | 游戏测速 |
-| ticket-add | 购票测速 |
-| mall-add | 电商测速 |
-| live-add | 直播测速 |
-| news-add | 资讯测速 |
-| red-packet-add | 抢红包测速 |
-| search-add | 搜索测速 |
-| video-add | 视频测速 |
-| web-add | 网页打开速度 |
-| webclass-add | 上网课测速 |
 
 <a name="c9u8x"></a>
 ### 释放资源
