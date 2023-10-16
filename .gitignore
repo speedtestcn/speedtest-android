@@ -25,3 +25,5 @@ hs_err_pid*
 /SpeedTestSDKDemo/app/proguardMapping.txt
 SpeedTestSDKDemo/app/release/
 .idea/
+MobileNetworkSdkDemo/app/proguardMapping.txt
+WifiAnalyseSdkDemo/app/proguardMapping.txt

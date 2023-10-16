@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context=".MainActivity">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:gravity="center_vertical"
+      android:padding="10dp">
+        <Switch
+          android:id="@+id/switch_fast_speed"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="快速测速"/>
+        <RadioGroup
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:layout_marginTop="10dp">
+            <RadioButton
+              android:id="@+id/rb_app_to_net"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:checked="true"
+              android:text="App->外网"/>
+            <RadioButton
+              android:id="@+id/rb_app_to_router"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="App->路由器"/>
+            <RadioButton
+              android:id="@+id/rb_router_to_net"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:text="路由器->外网"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <Spinner
+      android:id="@+id/spinner_select_node"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/btn_start_mbps"
+      android:text="开始测速(单位Mbps)"></Button>
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/btn_start_mbs"
+      android:text="开始测速(单位Mb/s)"></Button>
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/btn_start_kbs"
+      android:text="开始测速(单位Kb/s)"></Button>
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/btn_add_nodes"
+      android:text="点击增加测速节点页数"></Button>
+
+    <Button
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/btn_stop_speedtest"
+      android:text="Stop Speed Test"
+      android:textAllCaps="false"></Button>
+
+    <TextView
+      android:id="@+id/edt_select_node"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      />
+    <TextView
+      android:id="@+id/edt_ping_result"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      />
+    <TextView
+      android:id="@+id/edt_ping_loss_result"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+
+      />
+    <TextView
+      android:id="@+id/edt_result"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      />
+    <TextView
+      android:id="@+id/edt_upload_result"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      />
+
+
+</LinearLayout>

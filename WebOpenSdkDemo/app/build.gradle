@@ -5,7 +5,7 @@ android {
     buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.speedtest.webopen_sdk_demo"
+        applicationId "com.speedtest.combosdk"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
@@ -37,7 +37,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'cn.speedtest:sdk-webopen:1.0.2'
+    implementation 'cn.speedtest:sdk-webopen:1.0.6'
 
 //    implementation files('libs\\webopen-sdk-release.aar')
 ////

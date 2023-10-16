@@ -1,5 +1,8 @@
 本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用移动网络检测基本功能。
 
+## sdk合规使用指引
+[https://b.speedtest.cn/compliance/](https://b.speedtest.cn/compliance/)
+
 <a name="ZShsl"></a>
 # 前提条件
 开发前的环境要求如下表所示
@@ -26,7 +29,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'com.juqing.speedtest:sdk-mobile-network:1.0.4'
+     implementation 'cn.speedtest:sdk-mobile-network:1.0.4'
 }
 ```
 <a name="Od9HU"></a>
@@ -43,7 +46,7 @@ dependencies {
 ```java
 dependencies {   
         ...   
-    //依赖的移动网络检测SDK  
+    //依赖的移动网络检测SDK
     implementation files('libs\\sdk-mobile-network-1.0.4.aar')
 }
 ```
@@ -106,6 +109,13 @@ implementation 'androidx.recyclerview:recyclerview:1.1.0'
 <a name="qI6In"></a>
 # 功能使用
 <a name="jjhaf"></a>
+### 权限申请
+功能使用前需要申请所需要的权限，以保证功能可以正常使用
+| 权限 |
+| --- |
+| ACCESS_FINE_LOCATION |
+| ACCESS_COARSE_LOCATION |
+| READ_PHONE_STATE |
 ### SDK初始化
 执行初始化需要使用开发者申请应用得到 `appId` 和 `key`，在Application或者主Activity中加入以下(推荐在Application中加入以下初始化代码，初始化不会执行任何耗时操作，不用担心影响App启动速度：
 ```java

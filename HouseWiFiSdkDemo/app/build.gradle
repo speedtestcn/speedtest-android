@@ -5,7 +5,7 @@ android {
     buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.speedtest.housewifi_sdk_demo"
+        applicationId "com.speedtest.combosdk"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
@@ -35,7 +35,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'cn.speedtest:sdk-housewifi:1.0.1'
+    implementation 'cn.speedtest:sdk-housewifi:1.0.3'
 
 //    implementation files('libs\\housewifi-sdk-release.aar')
 ////

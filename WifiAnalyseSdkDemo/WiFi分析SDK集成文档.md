@@ -1,5 +1,8 @@
 本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用WiFi分析基本功能。
 
+## sdk合规使用指引
+[https://b.speedtest.cn/compliance/](https://b.speedtest.cn/compliance/)
+
 <a name="ZShsl"></a>
 # 前提条件
 开发前的环境要求如下表所示
@@ -26,7 +29,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation ''
+     implementation 'cn.speedtest:sdk-wifianalysis:1.0.1'
 }
 ```
 <a name="Od9HU"></a>
@@ -36,7 +39,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-|  | /app/libs/ |
+| sdk-wifianalysis-1.0.1.arr | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -44,7 +47,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的WiFi分析SDK  
-    implementation files('libs\\')
+    implementation files('libs\\sdk-wifianalysis-1.0.1.arr')
 }
 ```
 

@@ -28,9 +28,11 @@ import com.speedtest.speedtest_sdk.callback.GetIpInfoCallback;
 import com.speedtest.speedtest_sdk.callback.GetNodeListCallback;
 import com.speedtest.speedtest_sdk.callback.GetSpeedExtraCallback;
 import com.speedtest.speedtest_sdk.callback.PingCallback;
+import com.speedtest.speedtest_sdk.callback.SpecialTestCallback;
 import com.speedtest.speedtest_sdk.callback.SpeedtestCallback;
 import com.speedtest.speedtest_sdk.data.PingResultData;
 import com.speedtest.speedtest_sdk.data.SpeedExtraData;
+import com.speedtest.speedtest_sdk.data.SpeedtestState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +47,15 @@ public class NonUIActivity extends AppCompatActivity {
     private Button abortBtn;
     private Button getIpBtn;
     private Button btnSkipToNodesSelect;
-    private TextView editText;
+    private TextView editDownloadText;
     private TextView editUploadText;
     private TextView editPingText;
     private TextView editPingLossText;
     private TextView txtGetNodeText;
+    private TextView tvSpecialTestResult;
     private TextView tvIpInfo;
     private TextView tvSpeedExtraResultText;
+    private TextView editProcessStateText;
     private EditText etHoldValue;
     private Switch switchAutoSpeed;
     private Switch switchFastSpeed;
@@ -64,6 +68,7 @@ public class NonUIActivity extends AppCompatActivity {
     private PingResultData mPingResultData;
     private List<NodeListBean> mNodeListBeans;
     private int page = 1;
+    private String speedUnitStr;
 
     private MyHandler mHandler = new MyHandler();
 
@@ -76,7 +81,7 @@ public class NonUIActivity extends AppCompatActivity {
         startSpeedBtnKbs = findViewById(R.id.btn_start_kbs);
         addTestNodes = findViewById(R.id.btn_add_nodes);
         abortBtn = findViewById(R.id.btn_abort);
-        editText = findViewById(R.id.edt_result);
+        editDownloadText = findViewById(R.id.edt_result);
         tvSpeedExtraResultText = findViewById(R.id.tv_speed_extra_result);
         editUploadText = findViewById(R.id.edt_upload_result);
         editPingText = findViewById(R.id.edt_ping_result);
@@ -88,6 +93,8 @@ public class NonUIActivity extends AppCompatActivity {
         spinnerSelectNode = findViewById(R.id.spinner_select_node);
         getIpBtn = findViewById(R.id.btn_get_ip);
         tvIpInfo = findViewById(R.id.tv_ip_info);
+        editProcessStateText = findViewById(R.id.edt_process_state);
+        tvSpecialTestResult = findViewById(R.id.tv_special_test_result);
 
         nodeListId = new ArrayList<String>();
         mNodeListBeans = new ArrayList<NodeListBean>();
@@ -96,13 +103,14 @@ public class NonUIActivity extends AppCompatActivity {
         spinnerSelectNode.setAdapter(mArrayAdapter);
         spinnerSelectNode.setSelection(0);
 
-        editText.setMovementMethod(ScrollingMovementMethod.getInstance());
+        editDownloadText.setMovementMethod(ScrollingMovementMethod.getInstance());
 
-        speedInterface = SpeedInterface.getSDK().autoDown(true).fastSpeed(true);
+        speedInterface = SpeedInterface.getSDK();
         startSpeedBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                speedInterface.autoDown(switchAutoSpeed.isChecked()).fastSpeed(switchFastSpeed.isChecked());
+                clearValue();
+                speedUnitStr = "Mbps";
                 downCount = 0;
                 upCount = 0;
                 speedInterface.startSpeedTest(pingCallback,downloadCallback,uploadCallback,SpeedUnit.Mbitps);
@@ -143,11 +151,30 @@ public class NonUIActivity extends AppCompatActivity {
             }
         });
 
+        speedInterface.setSpecialTestCallback(new SpecialTestCallback() {
+            @Override
+            public void onResult(String toolName, long avgVal) {
+                Message msg = mHandler.obtainMessage();
+                msg.what = 14;
+                msg.obj = toolName;
+                msg.arg1 = (int) avgVal;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onError(SdkThrowable throwable) {
+                Message msg = mHandler.obtainMessage();
+                msg.obj = throwable;
+                msg.what = 15;
+                mHandler.sendMessage(msg);
+            }
+        });
+
         startSpeedBtnMbs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                speedInterface
-                    .autoDown(switchAutoSpeed.isChecked()).fastSpeed(switchFastSpeed.isChecked());
+                clearValue();
+                speedUnitStr = "MB/s";
                 speedInterface.startSpeedTest(pingCallback,downloadCallback,uploadCallback, SpeedUnit.MBps);
             }
         });
@@ -155,8 +182,8 @@ public class NonUIActivity extends AppCompatActivity {
         startSpeedBtnKbs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                speedInterface
-                    .autoDown(switchAutoSpeed.isChecked()).fastSpeed(switchFastSpeed.isChecked());
+                clearValue();
+                speedUnitStr = "KB/s";
                 speedInterface.startSpeedTest(pingCallback,downloadCallback,uploadCallback,SpeedUnit.KBps);
             }
         });
@@ -265,6 +292,14 @@ public class NonUIActivity extends AppCompatActivity {
             msg.obj = pckLoss;
             mHandler.sendMessage(msg);
         }
+
+        @Override
+        public void onProcessState(SpeedtestState speedtestState) {
+            Message msg = mHandler.obtainMessage();
+            msg.what = 13;
+            msg.obj = speedtestState;
+            mHandler.sendMessage(msg);
+        }
     };
 
     private SpeedtestCallback downloadCallback = new SpeedtestCallback() {
@@ -364,32 +399,32 @@ public class NonUIActivity extends AppCompatActivity {
                     editPingLossText.setText("丢包：>>>>>>>" + msg.obj.toString() +"\n");
                     break;
                 case 3:
-                    editText.setText("Start SpeedTest Download:---------------------"+"\n");
+                    editDownloadText.setText("Start SpeedTest Download:---------------------"+"\n");
                     break;
                 case 4:
-                    editText.setText(msg.obj.toString() + "\n");
+                    editDownloadText.setText("下载速度" + speedUnitStr + ":" + msg.obj.toString());
                     break;
                 case 5:
-                    editText.setText("End SpeedTest Download:---------------------次数："+ downCount +"\n" + msg.obj.toString());
+                    editDownloadText.setText("End SpeedTest Download:---------------------次数："+ downCount +"\n" + "下载速度" + speedUnitStr + ":" + msg.obj.toString());
                     break;
                 case 6:
-                    editText.setText("Download Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code + ((SdkThrowable)msg.obj).msg);
+                    editDownloadText.setText("Download Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code + ((SdkThrowable)msg.obj).msg);
                     break;
                 case 7:
                     editUploadText.setText("Start SpeedTest Upload:---------------------"+"\n");
                     break;
                 case 8:
-                    editUploadText.setText(msg.obj.toString() + "\n");
+                    editUploadText.setText("上传速度" + speedUnitStr + ":" + msg.obj.toString());
                     break;
                 case 9:
-                    editUploadText.setText("End SpeedTest Upload:---------------------次数："+ upCount +"\n" + msg.obj.toString());
+                    editUploadText.setText("End SpeedTest Upload:---------------------次数："+ upCount +"\n" + "上传速度" + speedUnitStr + ":" + msg.obj.toString());
                     break;
                 case 10:
                     editUploadText.setText("Upload Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code + ((SdkThrowable)msg.obj).msg);
                     break;
                 case 11:
                     SpeedExtraData extraData = (SpeedExtraData)msg.obj;
-                    tvSpeedExtraResultText.setText("下载速率峰值：" + extraData.downloadCrest + "  上传速率峰值：" + extraData.uploadCrest + "\n"+
+                    tvSpeedExtraResultText.setText("下载速率峰值：" + extraData.getDownloadCrest() + "  上传速率峰值：" + extraData.getUploadCrest() + "\n"+
                         "下载忙时时延最大值：" + extraData.getBusyDownloadPingMax() + "  上传忙时时延最大值：" + extraData.getBusyUploadPingMax() + "\n"+
                         "下载忙时时延最小值：" + extraData.getBusyDownloadPingMin() + "  上传忙时时延最小值：" + extraData.getBusyUploadPingMin()+ "\n" +
                         "下载忙时时延：" + extraData.getBusyDownloadPing() + "  上传忙时时延：" + extraData.getBusyUploadPing() + "\n"+
@@ -399,9 +434,28 @@ public class NonUIActivity extends AppCompatActivity {
                 case 12:
                     tvSpeedExtraResultText.setText("Download Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code + ((SdkThrowable)msg.obj).msg);
                     break;
+                case 13:
+                    editProcessStateText.setText("SpeedTest Process State:" + (SpeedtestState)msg.obj);
+                    break;
+                case 14:
+                    tvSpecialTestResult.append("加测名称：" + (String) msg.obj + "，测试平均时间（ms）：" + msg.arg1 + "\n");
+                    break;
+                case 15:
+                    tvSpecialTestResult.setText("加测 Occur Error：---------------------" + ((SdkThrowable)msg.obj).code + ((SdkThrowable)msg.obj).msg);
+                    break;
                 default:
                     break;
             }
         }
+    }
+
+    private void clearValue() {
+        editPingText.setText("");
+        editPingLossText.setText("");
+        editDownloadText.setText("");
+        editUploadText.setText("");
+        tvSpeedExtraResultText.setText("");
+        editProcessStateText.setText("");
+        tvSpecialTestResult.setText("");
     }
 }

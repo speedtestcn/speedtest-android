@@ -1,5 +1,8 @@
 本文为你介绍了Android端集成SDK操作，帮助你快速集成SDK并能使用测速基本功能。
 
+## sdk合规使用指引
+[https://b.speedtest.cn/compliance/](https://b.speedtest.cn/compliance/)
+
 <a name="ZShsl"></a>
 # 前提条件
 开发前的环境要求如下表所示
@@ -46,7 +49,7 @@ dependencies {
 ```java
 dependencies {   
         ...   
-    //依赖的网络测速SDK  
+    //依赖的网络测速SDK
     implementation files('libs\\speedtest-cn-sdk_1.1.7.aar')
 }
 ```
@@ -113,6 +116,13 @@ android:networkSecurityConfig="@xml/network_security_config"
 <a name="qI6In"></a>
 # 功能使用
 <a name="jjhaf"></a>
+### 权限申请
+功能使用前需要申请所需要的权限，以保证功能可以正常使用
+| 权限 |
+| --- |
+| ACCESS_FINE_LOCATION |
+| ACCESS_COARSE_LOCATION |
+| READ_PHONE_STATE |
 ### SDK初始化
 执行初始化需要使用开发者申请应用得到 `appId` 和 `key`，在Application或者主Activity中加入以下(推荐在Application中加入以下初始化代码，初始化不会执行任何耗时操作，不用担心影响App启动速度：
 ```java
@@ -128,19 +138,6 @@ SpeedInterface初始化，获取全局SpeedInterface对象：
   SpeedInterface.getSDK(Context context)
 ```
 
-<a name="cu60d"></a>
-### 配置快速测速（可选）
-SpeedInterface配置是否启用快速测速（fastSpeed），设置为true为启用快速测速，默认关闭。快速测速可以减少流量消耗，在移动网络测速时建议开启。
-
-| 参数 | 说明 | 类型 | 可选值 | 默认值 |
-| --- | --- | --- | --- | --- |
-| fastSpeed | 快速测速 | boolean | true/false | false |
-
-
-**示例代码：**
-```java
-SpeedInterface.getSDK(Context context).fastSpeed(boolean fastSpeed);
-```
 <a name="ZQ3KI"></a>
 ### 测速接口定义
 测速接口startSpeedTest调用内部会执行Ping、下载以及上传，执行获取的数据通过回调返回给接口调用者，接口定义如下：
@@ -175,8 +172,24 @@ private PingCallback pingCallback = new PingCallback() {
     public void onPckLoss(double pckLoss) {
         LogUtil.d("Ping pckLoss Value：" + pckLoss +"\n");
     }
+    @Override
+    public void onProcessState(SpeedtestState speedtestState) {
+        LogUtil.d("ProcessState Value：" + speedtestState +"\n");
+   }
 };
 ```
+测速过程状态对应描述信息如下:
+
+| SpeedtestState | 描述 |
+| --- | --- |
+| SpeedtestState.SPEEDTEST_STATUS_AUTH | 权限校验 |
+| SpeedtestState.SPEEDTEST_STATUS_SELECT_NODE | 选择节点 |
+| SpeedtestState.SPEEDTEST_STATUS_PING | PING |
+| SpeedtestState.SPEEDTEST_STATUS_DOWNLOAD | 下载测速 |
+| SpeedtestState.SPEEDTEST_STATUS_UPLOAD | 上传测速 |
+| SpeedtestState.SPEEDTEST_STATUS_SPECIAL_TEST | 加测 |
+| SpeedtestState.SPEEDTEST_STATUS_END | 测速结束 |
+
 ```java
 private SpeedtestCallback downloadCallback = new SpeedtestCallback() {
     @Override
@@ -309,7 +322,7 @@ SpeedInterface.getSDK(context).getIpLocation(new GetIpInfoCallback() {
 * @Description : 获取测速过程信息
 * @Params : callback
 */
-public void getIpLocation(final GetIpInfoCallback callback) {
+public void getSpeedExtraData(final GetSpeedExtraCallback callback) {
   ...
 }
 //接口调用示例
@@ -341,6 +354,31 @@ public class NodeListBean {
    private float busyUploadJitter; //忙时抖动（上传）
     ...
 }
+```
+
+### 获取加测结果
+通过setSpecialTestCallback接口，在SpecialTestCallback回调获取加测结果：
+```java
+//接口定义
+/**
+   * 通过回调获取加测结果
+   * @param callback
+   */
+  public void setSpecialTestCallback(SpecialTestCallback callback) {
+    ...
+  }
+//接口调用示例
+SpeedInterface.getSDK(context).setSpecialTestCallback(new SpecialTestCallback() {
+            @Override
+            public void onResult(String toolName, long avgVal) {
+                ...
+            }
+
+            @Override
+            public void onError(SdkThrowable throwable) {
+                ...
+            }
+        });
 ```
 
 <a name="c9u8x"></a>
