@@ -86,7 +86,8 @@
             <TextView
               android:id="@+id/tv_ip_info"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+              android:layout_height="wrap_content"
+              android:padding="@dimen/margin_10"/>
 
             <TextView
               android:id="@+id/edt_select_node"
@@ -137,7 +138,7 @@
               android:id="@+id/tv_special_test_result"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/margin_10"
+              android:layout_marginTop="10dp"
               />
 
         </LinearLayout>

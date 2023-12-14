@@ -242,18 +242,18 @@ public class NonUIActivity extends AppCompatActivity {
         speedInterface.getNodeList(page, new GetNodeListCallback() {
             @Override
             public void onResult(List<NodeListBean> listBeans) {
-                if (page == 1 && (listBeans == null || listBeans.size() == 0)) {
+                if (page == 1) {
                     mNodeListBeans.clear();
                     nodeListId.clear();
                     mArrayAdapter.notifyDataSetChanged();
-                    return;
                 }
-
-                mNodeListBeans.addAll(listBeans);
-                for (NodeListBean bean : listBeans) {
-                    nodeListId.add(String.valueOf(bean.getId()) + "-" + bean.getSponsor() + "-" + bean.getOperator() + "-" + bean.getCity());
+                if (listBeans != null && listBeans.size() > 0) {
+                    mNodeListBeans.addAll(listBeans);
+                    for (NodeListBean bean : listBeans) {
+                        nodeListId.add(String.valueOf(bean.getId()) + "-" + bean.getSponsor() + "-" + bean.getOperator() + "-" + bean.getCity());
+                    }
+                    mArrayAdapter.notifyDataSetChanged();
                 }
-                mArrayAdapter.notifyDataSetChanged();
             }
 
             @Override

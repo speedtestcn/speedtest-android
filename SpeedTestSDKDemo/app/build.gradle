@@ -32,6 +32,9 @@ dependencies {
   androidTestImplementation project.ext.androidTestJunit
   androidTestImplementation project.ext.androidTestEspresso
 
+  //国内用户
   implementation 'cn.speedtest:sdk-speedtest:1.1.6'
+  //海外用户
+  implementation 'cn.speedtest:sdk-speedtest-foreign:1.0.7'
 
 }
