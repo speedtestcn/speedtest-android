@@ -29,7 +29,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-ui-speedtest:1.1.0'
+     implementation 'cn.speedtest:sdk-ui-speedtest:1.1.1'
 }
 ```
 <a name="Od9HU"></a>
@@ -39,7 +39,7 @@ dependencies {
 
 | 文件名称 | 文件路径 |
 | --- | --- |
-| sdk-ui-speedtest-1.1.0.aar | /app/libs/ |
+| sdk-ui-speedtest-1.1.1.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -47,7 +47,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网络测速SDK
-    implementation files('libs\\sdk-ui-speedtest-1.1.0.aar')
+    implementation files('libs\\sdk-ui-speedtest-1.1.1.aar')
 }
 ```
 
