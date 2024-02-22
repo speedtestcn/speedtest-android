@@ -7,6 +7,7 @@
 + 移动网络检测sdk Demo
 + 全屋WiFi sdk Demo
 + 异常诊断 sdk Demo
++ WiFi分析 sdk Demo
 ## 功能介绍
 + Demo中使用gradle集成，如果需要使用离线依赖aar可前往[企业服务平台](https://b.speedtest.cn/speedtest-sdk)下载；
 + Demo中代码在本地编译运行时，需要在SDKConfig文件中填写注册的AppId和AppKey，同时修改build.gradle中ApplicationId，需要同时校验AppId、AppKey和ApplicationId。
