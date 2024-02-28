@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation project.ext.androidTestEspresso
     implementation 'cn.speedtest:sdk-ui-speedtest:1.1.1'
 
-//    implementation files('libs\\speedtest-ui-sdk-release.aar')
+//    implementation files('libs\\sdk-ui-speedtest-1.1.1.aar')
 ////
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 //    // gson

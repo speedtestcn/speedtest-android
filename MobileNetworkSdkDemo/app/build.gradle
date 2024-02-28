@@ -34,9 +34,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'cn.speedtest:sdk-mobile-network:1.0.3'
+    implementation 'cn.speedtest:sdk-mobile-network:1.0.4'
 
-//    implementation files('libs\\mobileweb-sdk-release.aar')
+//    implementation files('libs\\sdk-mobile-network-1.0.4.aar')
 ////
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 //    // gson

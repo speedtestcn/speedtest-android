@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation project.ext.androidTestEspresso
     implementation 'cn.speedtest:sdk-housewifi:1.0.5'
 
-//    implementation files('libs\\housewifi-sdk-release.aar')
+//    implementation files('libs\\sdk-housewifi-1.0.5.aar')
 ////
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 //    // gson

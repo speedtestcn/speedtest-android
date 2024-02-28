@@ -37,7 +37,7 @@ dependencies {
     androidTestImplementation project.ext.androidTestEspresso
     implementation 'cn.speedtest:sdk-video:1.0.6'
 
-//    implementation files('libs\\videotest-sdk-release.aar')
+//    implementation files('libs\\sdk-video-1.0.6.aar')
 ////
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 //    // gson

@@ -39,7 +39,7 @@ dependencies {
     androidTestImplementation project.ext.androidTestEspresso
     implementation 'cn.speedtest:sdk-webopen:1.0.6'
 
-//    implementation files('libs\\webopen-sdk-release.aar')
+//    implementation files('libs\\sdk-webopen-1.0.6')
 ////
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 //    // gson

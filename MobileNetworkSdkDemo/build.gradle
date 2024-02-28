@@ -7,7 +7,7 @@ buildscript {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven {
-            url 'https://repository.speedtest.cn/repository/speedtest-release/'
+            url 'https://nexus-online.speedtest.cn/repository/speedtest-release/'
         }
     }
     dependencies {
@@ -25,7 +25,7 @@ allprojects {
         jcenter()
         maven { url 'https://jitpack.io' }
         maven {
-            url 'https://repository.speedtest.cn/repository/speedtest-release/'
+            url 'https://nexus-online.speedtest.cn/repository/speedtest-release/'
         }
 
     }
