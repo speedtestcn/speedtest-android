@@ -7,11 +7,11 @@
 # 前提条件
 开发前的环境要求如下表所示
 
-| **类别** | **说明** |
-| --- | --- |
-| 系统版本 | 支持Android 4.4及以上 |
+| **类别** | **说明**                              |
+| --- |-------------------------------------|
+| 系统版本 | 支持Android 7.0及以上                    |
 | CPU架构 | 支持真机架构armeabi、armeabi-v7a、arm64-v8a |
-| 开发软件 | 确保使用Android Studio进行开发 |
+| 开发软件 | 确保使用Android Studio进行开发              |
 
 
 <a name="rwrFc"></a>
@@ -29,7 +29,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-ui-speedtest:1.1.1'
+     implementation 'cn.speedtest:sdk-ui-speedtest:1.1.2'
 }
 ```
 <a name="Od9HU"></a>
@@ -37,9 +37,9 @@ dependencies {
 
 1. 你需要下载SDK，下载链接请参见[SDK下载](https://b.speedtest.cn/speedtest-sdk)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
 
-| 文件名称 | 文件路径 |
-| --- | --- |
-| sdk-ui-speedtest-1.1.1.aar | /app/libs/ |
+| 文件名称                       | 文件路径 |
+|----------------------------| --- |
+| sdk-ui-speedtest-1.1.2.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -47,7 +47,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网络测速SDK
-    implementation files('libs\\sdk-ui-speedtest-1.1.1.aar')
+    implementation files('libs\\sdk-ui-speedtest-1.1.2.aar')
 }
 ```
 
@@ -79,7 +79,7 @@ implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
 //reflection
-implementation 'com.github.tiann:FreeReflection:3.1.0'
+implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
 
 //OAID
 implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
@@ -98,6 +98,10 @@ implementation 'androidx.recyclerview:recyclerview:1.1.0'
 -keep class * implements com.speedtest.lib_bean.IBean {
   *;
 }
+
+#↓↓↓↓↓↓↓free_reflection↓↓↓↓↓↓↓
+# Don't touch the restrictionbypass code
+-keep class org.chickenhook.restrictionbypass.** { *; }
 ```
 <a name="z0TsY"></a>
 ## Android P/Android 9.0版本适配

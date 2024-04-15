@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.speedtest.combosdk"
@@ -16,7 +15,7 @@ android {
 
     buildTypes {
         debug {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         release {
@@ -35,9 +34,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'cn.speedtest:sdk-ui-speedtest:1.1.1'
+    implementation 'cn.speedtest:sdk-ui-speedtest:1.1.2'
+//    implementation 'cn.speedtest:sdk-ui-speedtest:1.0.0-SNAPSHOT'
 
-//    implementation files('libs\\sdk-ui-speedtest-1.1.1.aar')
+//    implementation files('libs\\sdk-ui-speedtest-1.1.2.aar')
 ////
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 //    // gson
@@ -60,7 +60,7 @@ dependencies {
 //    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 //
 //    //reflection
-//    implementation 'com.github.tiann:FreeReflection:3.1.0'
+//    implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
 //
 //    //OAID
 //    implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'

@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.speedtest.combosdk"
@@ -35,9 +34,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'cn.speedtest:sdk-housewifi:1.0.5'
+    implementation 'cn.speedtest:sdk-housewifi:1.0.8'
+//    implementation 'cn.speedtest:sdk-housewifi:1.0.0-SNAPSHOT'
 
-//    implementation files('libs\\sdk-housewifi-1.0.5.aar')
+//    implementation files('libs\\sdk-housewifi-1.0.8.aar')
 ////
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 //    // gson

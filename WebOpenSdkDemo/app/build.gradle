@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
-    buildToolsVersion project.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.speedtest.combosdk"
@@ -37,9 +36,10 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'cn.speedtest:sdk-webopen:1.0.6'
+    implementation 'cn.speedtest:sdk-webopen:1.0.7'
+//    implementation 'cn.speedtest:sdk-webopen:1.0.0-SNAPSHOT'
 
-//    implementation files('libs\\sdk-webopen-1.0.6')
+//    implementation files('libs\\sdk-webopen-1.0.7')
 ////
 //    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 //    // gson
