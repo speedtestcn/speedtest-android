@@ -7,11 +7,11 @@
 # 前提条件
 开发前的环境要求如下表所示
 
-| **类别** | **说明** |
-| --- | --- |
-| 系统版本 | 支持Android 4.4及以上 |
+| **类别** | **说明**                              |
+| --- |-------------------------------------|
+| 系统版本 | 支持Android 7.0及以上                    |
 | CPU架构 | 支持真机架构armeabi、armeabi-v7a、arm64-v8a |
-| 开发软件 | 确保使用Android Studio进行开发 |
+| 开发软件 | 确保使用Android Studio进行开发              |
 
 
 <a name="rwrFc"></a>
@@ -29,7 +29,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-mobile-network:1.0.4'
+     implementation 'cn.speedtest:sdk-mobile-network:1.0.8'
 }
 ```
 <a name="Od9HU"></a>
@@ -37,9 +37,9 @@ dependencies {
 
 1. 你需要下载SDK，下载链接请参见[SDK下载](https://b.speedtest.cn/speedtest-sdk)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
 
-| 文件名称 | 文件路径 |
-| --- | --- |
-| sdk-mobile-network-1.0.4.aar | /app/libs/ |
+| 文件名称                         | 文件路径 |
+|------------------------------| --- |
+| sdk-mobile-network-1.0.8.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -47,7 +47,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的移动网络检测SDK
-    implementation files('libs\\sdk-mobile-network-1.0.4.aar')
+    implementation files('libs\\sdk-mobile-network-1.0.8.aar')
 }
 ```
 
@@ -79,7 +79,7 @@ implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
 implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
 //reflection
-implementation 'com.github.tiann:FreeReflection:3.1.0'
+implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
 
 //OAID
 implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
@@ -92,6 +92,18 @@ implementation 'com.github.donkingliang:GroupedRecyclerViewAdapter:2.4.1'
 
 //recyclerview 如果app中已添加此处可忽略
 implementation 'androidx.recyclerview:recyclerview:1.1.0'
+
+//expandLayout
+implementation 'com.github.cachapa:ExpandableLayout:2.9.2'
+
+//utilcodex
+implementation 'com.blankj:utilcodex:1.31.1'
+
+//share
+implementation 'gdut.bsx:share2:0.9.3'
+
+//mp_android_chart
+implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 ```
 
 <a name="VVclD"></a>
@@ -104,6 +116,11 @@ implementation 'androidx.recyclerview:recyclerview:1.1.0'
 -keep class * implements com.speedtest.lib_bean.IBean {
   *;
 }
+
+#↓↓↓↓↓↓↓free_reflection↓↓↓↓↓↓↓
+# Don't touch the restrictionbypass code
+-keep class org.chickenhook.restrictionbypass.** { *; }
+#↑↑↑↑↑↑↑free_reflection↑↑↑↑↑↑↑
 ```
 
 <a name="qI6In"></a>
@@ -116,6 +133,7 @@ implementation 'androidx.recyclerview:recyclerview:1.1.0'
 | ACCESS_FINE_LOCATION |
 | ACCESS_COARSE_LOCATION |
 | READ_PHONE_STATE |
+| WRITE_EXTERNAL_STORAGE |
 ### SDK初始化
 执行初始化需要使用开发者申请应用得到 `appId` 和 `key`，在Application或者主Activity中加入以下(推荐在Application中加入以下初始化代码，初始化不会执行任何耗时操作，不用担心影响App启动速度：
 ```java

@@ -25,15 +25,14 @@ public class MainActivity extends AppCompatActivity {
         comboBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,ComboListActivity.class);
+                Intent intent = new Intent(MainActivity.this, ComboListActivity.class);
                 startActivity(intent);
             }
         });
         gameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,ComboActivity.class);
-                intent.putExtra("TASK_TYPE", TaskType.PLAY_GAMES.name);
+                Intent intent = new Intent(MainActivity.this, GameActivity.class);
                 startActivity(intent);
             }
         });

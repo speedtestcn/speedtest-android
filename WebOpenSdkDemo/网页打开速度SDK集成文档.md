@@ -7,11 +7,11 @@
 # 前提条件
 开发前的环境要求如下表所示
 
-| **类别** | **说明** |
-| --- | --- |
-| 系统版本 | 支持Android 4.4及以上 |
+| **类别** | **说明**                              |
+| --- |-------------------------------------|
+| 系统版本 | 支持Android 7.0及以上                    |
 | CPU架构 | 支持真机架构armeabi、armeabi-v7a、arm64-v8a |
-| 开发软件 | 确保使用Android Studio进行开发 |
+| 开发软件 | 确保使用Android Studio进行开发              |
 
 
 <a name="rwrFc"></a>
@@ -29,7 +29,7 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-webopen:1.0.6'
+     implementation 'cn.speedtest:sdk-webopen:1.0.7'
 }
 ```
 <a name="Od9HU"></a>
@@ -37,9 +37,9 @@ dependencies {
 
 1. 你需要下载SDK，下载链接请参见[SDK下载](https://b.speedtest.cn/speedtest-sdk)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
 
-| 文件名称 | 文件路径 |
-| --- | --- |
-| sdk-webopen-1.0.6.aar | /app/libs/ |
+| 文件名称                  | 文件路径 |
+|-----------------------| --- |
+| sdk-webopen-1.0.7.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -47,7 +47,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网页打开速度SDK  
-    implementation files('libs\\sdk-webopen-1.0.6.aar')
+    implementation files('libs\\sdk-webopen-1.0.7.aar')
 }
 ```
 
