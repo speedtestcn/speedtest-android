@@ -84,6 +84,11 @@
               android:text="获取IP/ISP"></Button>
 
             <TextView
+              android:id="@+id/tv_sdk_version"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+
+            <TextView
               android:id="@+id/tv_ip_info"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
