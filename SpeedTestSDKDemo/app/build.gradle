@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
   compileSdkVersion project.ext.compileSdkVersion
   defaultConfig {
-    applicationId "com.speedtest.combosdk"
+    applicationId "your package name"
     minSdkVersion project.ext.minSdkVersion
     targetSdkVersion project.ext.targetSdkVersion
     versionCode project.ext.versionCode
@@ -11,9 +11,12 @@ android {
     testInstrumentationRunner project.ext.testInstrumentationRunner
     multiDexEnabled true
   }
+  lintOptions {
+    checkReleaseBuilds false
+  }
   buildTypes {
     debug {
-      minifyEnabled false
+      minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
     }
     release {
@@ -32,9 +35,8 @@ dependencies {
   androidTestImplementation project.ext.androidTestEspresso
 
   //国内用户
-  implementation 'cn.speedtest:sdk-speedtest:1.3.6'
-//  implementation 'cn.speedtest:sdk-speedtest:1.0.0-SNAPSHOT'
+  implementation 'cn.speedtest:sdk-speedtest:1.4.1'
   //海外用户
-//  implementation 'cn.speedtest:sdk-speedtest-foreign:1.0.7'
+//  implementation 'cn.speedtest:sdk-speedtest-foreign:1.0.8'
 
 }

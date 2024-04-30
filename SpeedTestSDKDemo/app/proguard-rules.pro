@@ -22,8 +22,11 @@
 #----------------------------------------------------------------------------
 #↓↓↓↓↓↓↓实体类↓↓↓↓↓↓↓
 -dontoptimize
--keep class com.speedtest.lib_api.http.bean.** { *; }
+-keep class com.speedtest.lib_api.http.** { *; }
 -keep class * implements com.speedtest.lib_bean.IBean {
+  *;
+}
+-keep interface com.speedtest.lib_bean.IBean {
   *;
 }
 
@@ -31,5 +34,3 @@
 # Don't touch the restrictionbypass code
 -keep class org.chickenhook.restrictionbypass.** { *; }
 #↑↑↑↑↑↑↑free_reflection↑↑↑↑↑↑↑
-
-
