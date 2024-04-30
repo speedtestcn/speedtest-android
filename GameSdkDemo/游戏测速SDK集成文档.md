@@ -29,17 +29,17 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-combo:1.1.3'
+     implementation 'cn.speedtest:sdk-game:1.0.0'
 }
 ```
 <a name="Od9HU"></a>
 ## 2、下载离线aar包进行集成
 
-1. 你需要下载SDK，下载链接请参见[SDK下载](https://b.speedtest.cn/speedtest-sdk)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
+1. 你需要下载SDK，下载链接请参见[SDK下载](https://b-api.speedtest.cn/sdkVersion/download?sdkName=gameSdk&os=Android&file=sdk)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
 
-| 文件名称                | 文件路径 |
-|---------------------| --- |
-| sdk-combo-1.1.3.aar | /app/libs/ |
+| 文件名称               | 文件路径 |
+|--------------------| --- |
+| sdk-game-1.0.0.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -47,7 +47,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的专项测速SDK
-    implementation files('libs\\sdk-combo-1.1.3.aar')
+    implementation files('libs\\sdk-game-1.0.0.aar')
 }
 ```
 
@@ -59,6 +59,9 @@ maven { url 'https://jitpack.io' } //如果app中已添加此处可忽略
 ```
 2）添加依赖
 ```
+//constraintlayout
+implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    
 //recyclerview
 implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
@@ -83,6 +86,13 @@ implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
 //glide
 implementation 'com.github.bumptech.glide:glide:4.11.0'
+implementation 'jp.wasabeef:glide-transformations:4.0.0'
+
+//mp_android_chart
+implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+//xxpermission
+implementation 'com.github.getActivity:XXPermissions:18.63'
 
 //free_reflection
 implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
@@ -134,23 +144,11 @@ SpeedtestInterface.init(this, SDKConfig.APP_ID, SDKConfig.APP_KEY);
 ```java
 <fragment
         android:id="@+id/fragment"
-        class="com.speedtest.combo_sdk.ui.PickGameFragment"
+        class="com.speedtest.game_sdk.ui.PickGameFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 ```
 
-### 设置专项测速类型
-在Activity中添加以下初始化代码设置专项测速类型
-```java
-TaskTypeUtil.setTaskType(TaskType.PLAY_GAMES);
-```
-测速类型对应描述信息如下:
-
-| TaskType | 描述 |
-| --- | --- |
-| TaskType.PLAY_GAMES | 游戏测速 |
-
-<a name="2c6XJ"></a>
 
 ### 补充说明
 

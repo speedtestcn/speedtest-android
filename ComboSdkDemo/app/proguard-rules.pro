@@ -172,8 +172,4 @@ public void *(android.webkit.WebView, jav.lang.String);
 -keep class * implements com.speedtest.lib_bean.IBean {
   *;
 }
-#↓↓↓↓↓↓↓free_reflection↓↓↓↓↓↓↓
-# Don't touch the restrictionbypass code
--keep class org.chickenhook.restrictionbypass.** { *; }
-#↑↑↑↑↑↑↑free_reflection↑↑↑↑↑↑↑
 

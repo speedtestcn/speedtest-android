@@ -2,12 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  tools:context=".MainActivity">
+  android:layout_height="match_parent">
 
   <fragment
     android:id="@+id/fragment"
-    class="com.speedtest.combo_sdk.ui.PickGameFragment"
+    class="com.speedtest.game_sdk.ui.PickGameFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     />

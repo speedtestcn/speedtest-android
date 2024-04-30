@@ -10,14 +10,7 @@
         android:id="@+id/btn_combo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="综合测速" />
-
-    <Button
-        android:id="@+id/btn_game"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="游戏测速" />
-
+        android:text="综合测速"/>
 
 
 </LinearLayout>

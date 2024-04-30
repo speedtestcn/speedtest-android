@@ -29,17 +29,17 @@ maven {
 添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
 ```
 dependencies {
-     implementation 'cn.speedtest:sdk-combo:1.1.3'
+     implementation 'cn.speedtest:sdk-combo:1.1.4'
 }
 ```
 <a name="Od9HU"></a>
 ## 2、下载离线aar包进行集成
 
-1. 你需要下载SDK，下载链接请参见[SDK下载](https://b.speedtest.cn/speedtest-sdk)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
+1. 你需要下载SDK，下载链接请参见[SDK下载](     implementation 'cn.speedtest:sdk-combo:1.1.4')。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
 
 | 文件名称                | 文件路径 |
 |---------------------| --- |
-| sdk-combo-1.1.3.aar | /app/libs/ |
+| sdk-combo-1.1.4.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -47,7 +47,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的专项测速SDK
-    implementation files('libs\\sdk-combo-1.1.3.aar')
+    implementation files('libs\\sdk-combo-1.1.4.aar')
 }
 ```
 
@@ -83,9 +83,6 @@ implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
 
 //glide
 implementation 'com.github.bumptech.glide:glide:4.11.0'
-
-//free_reflection
-implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
 ```
 
 <a name="VVclD"></a>
@@ -98,10 +95,6 @@ implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
 -keep class * implements com.speedtest.lib_bean.IBean {
   *;
 }
-
-#↓↓↓↓↓↓↓free_reflection↓↓↓↓↓↓↓
-# Don't touch the restrictionbypass code
--keep class org.chickenhook.restrictionbypass.** { *; }
 ```
 
 <a name="z0TsY"></a>
@@ -109,9 +102,9 @@ implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
 由于 Android P 限制了明文流量的网络请求，非加密的流量请求都会被系统禁止掉，所以需要再进行适配。适配方案如下： 在 res 下新建一个 xml 目录，然后创建一个xml文件，命名为network_security_config.xml ，该文件内容如下：
 ```java
 <?xml version="1.0" encoding="utf-8"?>
-            <network-security-config>
-                <base-config cleartextTrafficPermitted="true" />
-            </network-security-config>
+    <network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+    </network-security-config>
 ```
 
 然后在 AndroidManifest.xml application 标签内应用上面的xml配置：
