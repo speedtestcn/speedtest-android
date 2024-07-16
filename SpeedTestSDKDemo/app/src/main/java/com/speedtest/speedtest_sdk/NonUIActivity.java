@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,19 +24,22 @@ import com.speedtest.lib_api.http.bean.IpInfoBean;
 import com.speedtest.lib_api.http.bean.LocationInfoBean;
 import com.speedtest.lib_api.http.bean.NodeListBean;
 import com.speedtest.lib_auth.SdkThrowable;
-import com.speedtest.lib_model.unit.SpeedUnit;
+import com.speedtest.lib_speedtest.bean.PingResultData;
+import com.speedtest.lib_speedtest.bean.SpeedExtraData;
+import com.speedtest.lib_speedtest.unit.SpeedUnit;
 import com.speedtest.speedtest_sdk.SpeedInterface;
 import com.speedtest.speedtest_sdk.callback.GetIpInfoCallback;
+import com.speedtest.speedtest_sdk.callback.GetNodeDelayCallback;
 import com.speedtest.speedtest_sdk.callback.GetNodeListCallback;
 import com.speedtest.speedtest_sdk.callback.GetSpeedExtraCallback;
 import com.speedtest.speedtest_sdk.callback.PingCallback;
 import com.speedtest.speedtest_sdk.callback.SpecialTestCallback;
 import com.speedtest.speedtest_sdk.callback.SpeedtestCallback;
-import com.speedtest.speedtest_sdk.data.PingResultData;
-import com.speedtest.speedtest_sdk.data.SpeedExtraData;
 import com.speedtest.speedtest_sdk.data.SpeedtestState;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -73,6 +77,7 @@ public class NonUIActivity extends AppCompatActivity {
     private String speedUnitStr;
 
     private MyHandler mHandler = new MyHandler();
+    private List<Double> downList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,7 +122,7 @@ public class NonUIActivity extends AppCompatActivity {
                 speedUnitStr = "Mbps";
                 downCount = 0;
                 upCount = 0;
-                speedInterface.startSpeedTest(pingCallback,downloadCallback,uploadCallback,SpeedUnit.Mbitps);
+                speedInterface.startSpeedTest(pingCallback,downloadCallback,uploadCallback, SpeedUnit.Mbitps);
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -211,7 +216,7 @@ public class NonUIActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(SdkThrowable sdkThrowable) {
-                        Toast.makeText(NonUIActivity.this, sdkThrowable.code, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(NonUIActivity.this, sdkThrowable.code + "", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -239,6 +244,7 @@ public class NonUIActivity extends AppCompatActivity {
         });
 
         addTestNode(page);
+
     }
 
     private void addTestNode(final int page) {
@@ -262,9 +268,33 @@ public class NonUIActivity extends AppCompatActivity {
 
             @Override
             public void onError(SdkThrowable throwable) {
-                Toast.makeText(NonUIActivity.this, throwable.code, Toast.LENGTH_SHORT).show();
+                Toast.makeText(NonUIActivity.this, throwable.code + "", Toast.LENGTH_SHORT).show();
+            }
+        }, new GetNodeDelayCallback() {
+            @Override
+            public void onResult(NodeListBean nodeListBean) {
+                Log.e("NodeDelay", nodeListBean.toString());
+                for (NodeListBean bean : mNodeListBeans) {
+                    if (bean.equals(nodeListBean)) {
+                        bean.setDelay(nodeListBean.getDelay());
+                    }
+                }
+                if (!CollectionUtil.isEmpty(mNodeListBeans)) {
+                    nodeListId.clear();
+                    for (NodeListBean bean : mNodeListBeans) {
+                        nodeListId.add(String.valueOf(bean.getId()) + "-" + bean.getSponsor() + "-" + bean.getOperator() + "-" + bean.getCity() + "-" + bean.getDelay());
+                    }
+                    mArrayAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onError(SdkThrowable sdkThrowable) {
+
             }
         });
+
+
     }
 
     private PingCallback pingCallback = new PingCallback() {
@@ -319,6 +349,7 @@ public class NonUIActivity extends AppCompatActivity {
         public void onProcess(double mbps) {
             //editText.append(mbps + "\n");
             downCount++;
+            downList.add(mbps);
             Message msg = mHandler.obtainMessage();
             msg.what = 4;
             msg.obj = mbps;
@@ -386,6 +417,7 @@ public class NonUIActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        speedInterface.abort();
     }
 
     class MyHandler extends Handler {
@@ -409,7 +441,9 @@ public class NonUIActivity extends AppCompatActivity {
                     editDownloadText.setText("下载速度" + speedUnitStr + ":" + msg.obj.toString());
                     break;
                 case 5:
-                    editDownloadText.setText("End SpeedTest Download:---------------------次数："+ downCount +"\n" + "下载速度" + speedUnitStr + ":" + msg.obj.toString());
+                    editDownloadText.setText("End SpeedTest Download:---------------------次数：" +
+                        ""+ downCount +"\n" + "平均下载速度" + speedUnitStr + ":" + msg.obj.toString()
+                        + "最高下载速度" + speedUnitStr + ":" + Collections.max(downList));
                     break;
                 case 6:
                     editDownloadText.setText("Download Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code);
@@ -461,5 +495,6 @@ public class NonUIActivity extends AppCompatActivity {
         tvSpeedExtraResultText.setText("");
         editProcessStateText.setText("");
         tvSpecialTestResult.setText("");
+        downList.clear();
     }
 }

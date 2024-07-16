@@ -34,3 +34,6 @@
 # Don't touch the restrictionbypass code
 -keep class org.chickenhook.restrictionbypass.** { *; }
 #↑↑↑↑↑↑↑free_reflection↑↑↑↑↑↑↑
+-keep class com.realsignal.speedtest.** {
+    *;
+}

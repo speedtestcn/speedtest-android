@@ -16,33 +16,14 @@
 
 <a name="rwrFc"></a>
 # 集成SDK
-<a name="yoyQZ"></a>
-## 1、gradle集成
-
-1. 添加仓库，在**project**级别的**build.gradle**文件中添加Maven引用，示例如下：
-```
-maven { url 'https://jitpack.io' } //如果app中已添加此处可忽略
-maven {
-        url 'https://nexus-online.speedtest.cn/repository/speedtest-release/'
-      }
-```
-添加依赖，在主**module**的**build.gradle**文件添加SDK依赖，示例如下：
-```
-dependencies {
-     // 如果App主要针对国内用户，则依赖sdk-speedtest
-     implementation 'cn.speedtest:sdk-speedtest:1.3.6'
-     //如果App主要针对海外用户，则依赖sdk-speedtest-foreign
-     implementation 'cn.speedtest:sdk-speedtest-foreign:1.0.7'
-}
-```
 <a name="Od9HU"></a>
-## 2、下载离线aar包进行集成
+## 1、下载离线aar包进行集成
 
-1. 你需要下载SDK，下载链接请参见[SDK下载](https://b.speedtest.cn/speedtest-sdk)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
+1. 你需要下载SDK，下载链接请参见[SDK下载](https://b-api.speedtest.cn/sdkVersion/download?sdkName=speedSdk&os=Android&file=sdk)。解压后的文件需导入到Android Studio工程libs文件下，文件类型和路径如下表所示。
 
 | 文件名称                       | 文件路径 |
 |----------------------------| --- |
-| speedtest_cn_sdk_1.3.6.aar | /app/libs/ |
+| speedtest-sdk-release.aar | /app/libs/ |
 
 
 2. 在项目的/app/build.gradle文件中，添加如下行：
@@ -50,7 +31,7 @@ dependencies {
 dependencies {   
         ...   
     //依赖的网络测速SDK
-    implementation files('libs\\speedtest-cn-sdk_1.3.6.aar')
+    implementation files('libs\\speedtest-sdk-release.aar')
 }
 ```
 
@@ -102,6 +83,9 @@ implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
 #↓↓↓↓↓↓↓free_reflection↓↓↓↓↓↓↓
 # Don't touch the restrictionbypass code
 -keep class org.chickenhook.restrictionbypass.** { *; }
+-keep class com.realsignal.speedtest.** {
+*;
+}
 ```
 <a name="z0TsY"></a>
 ## Android P/Android 9.0版本适配
