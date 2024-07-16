@@ -35,8 +35,39 @@ dependencies {
   androidTestImplementation project.ext.androidTestEspresso
 
   //国内用户
-  implementation 'cn.speedtest:sdk-speedtest:1.4.1'
+//  implementation 'cn.speedtest:sdk-speedtest:1.4.1'
+//  implementation 'cn.speedtest:sdk-speedtest:1.0.0-SNAPSHOT'
   //海外用户
 //  implementation 'cn.speedtest:sdk-speedtest-foreign:1.0.8'
+
+//  implementation files('libs\\speedtest-sdk-release_156.aar')
+  implementation files('libs\\speedtest-sdk-release_122.aar')
+
+  //
+//    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    // gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+// okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+
+// retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+
+// converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+// rx - adapter
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+//rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
+
+    //reflection
+    implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
+
+    //OAID
+    implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
 
 }
