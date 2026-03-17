@@ -4,6 +4,7 @@ package com.speedtest.speedtest_sdk;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ import com.speedtest.lib_api.http.bean.NodeListBean;
 import com.speedtest.lib_auth.SdkThrowable;
 import com.speedtest.lib_speedtest.bean.PingResultData;
 import com.speedtest.lib_speedtest.bean.SpeedExtraData;
+import com.speedtest.lib_speedtest.callback.SetNodeCallback;
 import com.speedtest.lib_speedtest.unit.SpeedUnit;
 import com.speedtest.speedtest_sdk.SpeedInterface;
 import com.speedtest.speedtest_sdk.callback.GetIpInfoCallback;
@@ -35,12 +37,17 @@ import com.speedtest.speedtest_sdk.callback.GetSpeedExtraCallback;
 import com.speedtest.speedtest_sdk.callback.PingCallback;
 import com.speedtest.speedtest_sdk.callback.SpecialTestCallback;
 import com.speedtest.speedtest_sdk.callback.SpeedtestCallback;
+import com.speedtest.speedtest_sdk.data.SpeedAlgoType;
 import com.speedtest.speedtest_sdk.data.SpeedtestState;
+import com.speedtest.speedtest_sdk.data.SpeedtestType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import io.reactivex.disposables.Disposable;
 
 
 public class NonUIActivity extends AppCompatActivity {
@@ -49,25 +56,36 @@ public class NonUIActivity extends AppCompatActivity {
     private Button startSpeedBtnMbs;
     private Button startSpeedBtnKbs;
     private Button addTestNodes;
-    private Button abortBtn;
-    private Button getIpBtn;
+    private Button stopSpeedtestBtn;
     private Button btnSkipToNodesSelect;
     private TextView editDownloadText;
     private TextView editUploadText;
     private TextView editPingText;
+    private TextView tvSpeedExtraResultText;
+    private TextView editProcessStateText;
     private TextView editPingLossText;
     private TextView txtGetNodeText;
     private TextView tvSpecialTestResult;
+    private TextView tvGetIp;
     private TextView tvIpInfo;
-    private TextView tvSpeedExtraResultText;
-    private TextView editProcessStateText;
+
     private TextView tvSdkVersion;
     private EditText etHoldValue;
     private Switch switchAutoSpeed;
     private Switch switchFastSpeed;
+    private Switch switchAlgoType;
+    private TextView tvAlgoType;
+
+    private Button btSetDuration;
+    private EditText etDownDuration;
+    private EditText etUpDuration;
     private Spinner spinnerSelectNode;
+    private Spinner spinnerSpeedType;
+    private Disposable getNodeInfoDisposable;
     private List<String> nodeListId;
+    private List<String> speedTypeList;
     private ArrayAdapter<String> mArrayAdapter;
+    private ArrayAdapter<String> mTypeArrayAdapter;
     private SpeedInterface speedInterface;
     private int downCount;
     private int upCount;
@@ -77,7 +95,9 @@ public class NonUIActivity extends AppCompatActivity {
     private String speedUnitStr;
 
     private MyHandler mHandler = new MyHandler();
+
     private List<Double> downList = new ArrayList<>();
+    private SpeedUnit mUnit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,59 +107,54 @@ public class NonUIActivity extends AppCompatActivity {
         startSpeedBtnMbs = findViewById(R.id.btn_start_mbs);
         startSpeedBtnKbs = findViewById(R.id.btn_start_kbs);
         addTestNodes = findViewById(R.id.btn_add_nodes);
-        abortBtn = findViewById(R.id.btn_abort);
-        editDownloadText = findViewById(R.id.edt_result);
+        stopSpeedtestBtn = findViewById(R.id.btn_abort);
         tvSpeedExtraResultText = findViewById(R.id.tv_speed_extra_result);
+        editDownloadText = findViewById(R.id.edt_result);
         editUploadText = findViewById(R.id.edt_upload_result);
         editPingText = findViewById(R.id.edt_ping_result);
+        editProcessStateText = findViewById(R.id.edt_process_state);
         editPingLossText = findViewById(R.id.edt_ping_loss_result);
         txtGetNodeText = findViewById(R.id.edt_select_node);
         etHoldValue = findViewById(R.id.et_hold_value);
+        etDownDuration = findViewById(R.id.et_download_duration);
+        etUpDuration = findViewById(R.id.et_upload_duration);
+        btSetDuration = findViewById(R.id.bt_set_duration);
         switchAutoSpeed = findViewById(R.id.switch_auto_speed);
         switchFastSpeed = findViewById(R.id.switch_fast_speed);
         spinnerSelectNode = findViewById(R.id.spinner_select_node);
-        getIpBtn = findViewById(R.id.btn_get_ip);
-        tvIpInfo = findViewById(R.id.tv_ip_info);
-        editProcessStateText = findViewById(R.id.edt_process_state);
+        spinnerSpeedType = findViewById(R.id.spinner_speed_type);
+        switchAlgoType = findViewById(R.id.switch_algo_type);
+        tvAlgoType = findViewById(R.id.tv_algo_type);
         tvSpecialTestResult = findViewById(R.id.tv_special_test_result);
         tvSdkVersion = findViewById(R.id.tv_sdk_version);
-
+        tvGetIp = findViewById(R.id.btn_getip);
+        tvIpInfo = findViewById(R.id.tv_ip_info);
         nodeListId = new ArrayList<String>();
+        speedTypeList = Arrays.asList("下载&上传", "下载", "上传");
         mNodeListBeans = new ArrayList<NodeListBean>();
         nodeListId.add("选择测速节点");
         mArrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, nodeListId);
+        mTypeArrayAdapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, speedTypeList);
         spinnerSelectNode.setAdapter(mArrayAdapter);
+        spinnerSpeedType.setAdapter(mTypeArrayAdapter);
         spinnerSelectNode.setSelection(0);
 
         editDownloadText.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         speedInterface = SpeedInterface.getSDK();
-        tvSdkVersion.setText("SDK版本号：" + speedInterface.getSdkVersion());
-        startSpeedBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clearValue();
-                speedUnitStr = "Mbps";
-                downCount = 0;
-                upCount = 0;
-                speedInterface.startSpeedTest(pingCallback,downloadCallback,uploadCallback, SpeedUnit.Mbitps);
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        final NodeListBean bean = speedInterface.getSelectNode();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (bean == null) {
-                                    txtGetNodeText.setText("测速节点：未设置测速节点");
-                                } else {
-                                    txtGetNodeText.setText("测速节点："+speedInterface.getSelectNode().toString());
-                                }
-                            }
-                        });
-                    }
-                });
+        if (tvSdkVersion != null) {
+            tvSdkVersion.setText("SDK版本号：" + speedInterface.getSdkVersion() +" \n 环境切换：1-测试环境；2-预发布环境；3-海外正式环境；4-正式环境；5-海外测试环境    当前环境： "+speedInterface.getSDKType());
+        }
+
+        // 算法切换开关
+        updateAlgoTypeLabel();
+        switchAlgoType.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                speedInterface.setSpeedAlgoType(SpeedAlgoType.C_JNI);
+            } else {
+                speedInterface.setSpeedAlgoType(SpeedAlgoType.NATIVE);
             }
+            updateAlgoTypeLabel();
         });
 
         speedInterface.getSpeedExtraData(new GetSpeedExtraCallback() {
@@ -179,23 +194,98 @@ public class NonUIActivity extends AppCompatActivity {
             }
         });
 
+        startSpeedBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUnit = SpeedUnit.Mbitps;
+                clearValue();
+                downCount = 0;
+                upCount = 0;
+                updateAlgoTypeLabel();
+                speedInterface.startSpeedTest(pingCallback, downloadCallback, uploadCallback, mUnit);
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        final NodeListBean bean = speedInterface.getSelectNode();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (bean == null) {
+                                    txtGetNodeText.setText("测速节点：未设置测速节点");
+                                } else {
+                                    txtGetNodeText.setText("测速节点：" + speedInterface.getSelectNode().toString());
+                                }
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
         startSpeedBtnMbs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mUnit = SpeedUnit.MBps;
                 clearValue();
-                speedUnitStr = "MB/s";
-                speedInterface.startSpeedTest(pingCallback,downloadCallback,uploadCallback, SpeedUnit.MBps);
+                downCount = 0;
+                upCount = 0;
+                updateAlgoTypeLabel();
+                speedInterface.startSpeedTest(pingCallback, downloadCallback, uploadCallback, mUnit);
+                final NodeListBean bean = speedInterface.getSelectNode();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (bean == null) {
+                            txtGetNodeText.setText("测速节点：未设置测速节点");
+                        } else {
+                            txtGetNodeText.setText("测速节点：" + speedInterface.getSelectNode().toString());
+                        }
+                    }
+                });
             }
         });
 
         startSpeedBtnKbs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mUnit = SpeedUnit.KBps;
                 clearValue();
-                speedUnitStr = "KB/s";
-                speedInterface.startSpeedTest(pingCallback,downloadCallback,uploadCallback,SpeedUnit.KBps);
+                downCount = 0;
+                upCount = 0;
+                updateAlgoTypeLabel();
+                speedInterface.startSpeedTest(pingCallback, downloadCallback, uploadCallback, mUnit);
+                final NodeListBean bean = speedInterface.getSelectNode();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (bean == null) {
+                            txtGetNodeText.setText("测速节点：未设置测速节点");
+                        } else {
+                            txtGetNodeText.setText("测速节点：" + speedInterface.getSelectNode().toString());
+                        }
+                    }
+                });
             }
         });
+
+        tvGetIp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                speedInterface.getIpLocation(new GetIpInfoCallback() {
+                    @Override
+                    public void onResult(IpInfoBean ipInfoBean) {
+                        tvIpInfo.setText(new Gson().toJson(ipInfoBean));
+                        Toast.makeText(NonUIActivity.this, "ip:" + ipInfoBean.getIp(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(SdkThrowable throwable) {
+                        Toast.makeText(NonUIActivity.this, String.valueOf(throwable.code), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 
         addTestNodes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,35 +295,53 @@ public class NonUIActivity extends AppCompatActivity {
             }
         });
 
-        getIpBtn.setOnClickListener(new View.OnClickListener() {
+        stopSpeedtestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                speedInterface.getIpLocation(new GetIpInfoCallback() {
-                    @Override
-                    public void onResult(IpInfoBean ipInfoBean) {
-                        tvIpInfo.setText(new Gson().toJson(ipInfoBean));
-                    }
-
-                    @Override
-                    public void onError(SdkThrowable sdkThrowable) {
-                        Toast.makeText(NonUIActivity.this, sdkThrowable.code + "", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                speedInterface.stopSpeedtest();
             }
         });
 
-        abortBtn.setOnClickListener(new View.OnClickListener() {
+        btSetDuration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                speedInterface.abort();
+                if (!TextUtils.isEmpty(etDownDuration.getText().toString())) {
+                    int downSet = speedInterface.setDownloadMaxTestDuration(
+                            Integer.parseInt(etDownDuration.getText().toString()));
+                    if (downSet == 1) {
+                        Toast.makeText(NonUIActivity.this, "下载时长设置成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(NonUIActivity.this, "下载时长设置失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if (!TextUtils.isEmpty(etUpDuration.getText().toString())) {
+                    int upSet = speedInterface.setUploadMaxTestDuration(
+                            Integer.parseInt(etUpDuration.getText().toString()));
+                    if (upSet == 1) {
+                        Toast.makeText(NonUIActivity.this, "上传时长设置成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(NonUIActivity.this, "上传时长设置失败", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
         });
 
         spinnerSelectNode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (mNodeListBeans != null && mNodeListBeans.size() > 0) {
-                    speedInterface.setSelectNode(mNodeListBeans.get(position).getId());
+                if (!CollectionUtil.isEmpty(mNodeListBeans)) {
+                    speedInterface.setSelectNode(mNodeListBeans.get(position).getId(), new SetNodeCallback() {
+                        @Override
+                        public void onSuccess() {
+                            Toast.makeText(NonUIActivity.this, "节点设置成功", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(SdkThrowable sdkThrowable) {
+                            Toast.makeText(NonUIActivity.this, "节点设置失败：" + String.valueOf(sdkThrowable.code), Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
             }
 
@@ -243,7 +351,27 @@ public class NonUIActivity extends AppCompatActivity {
             }
         });
 
+        spinnerSpeedType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) {
+                    speedInterface.setSpeedTestType(SpeedtestType.DOWN_UP);
+                } else if (position == 1) {
+                    speedInterface.setSpeedTestType(SpeedtestType.DOWN);
+                } else if (position == 2) {
+                    speedInterface.setSpeedTestType(SpeedtestType.UP);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         addTestNode(page);
+
 
     }
 
@@ -257,10 +385,34 @@ public class NonUIActivity extends AppCompatActivity {
                     nodeListId.clear();
                     mArrayAdapter.notifyDataSetChanged();
                 }
-                if (listBeans != null && listBeans.size() > 0) {
+                if (!CollectionUtil.isEmpty(listBeans)) {
                     mNodeListBeans.addAll(listBeans);
                     for (NodeListBean bean : listBeans) {
-                        nodeListId.add(String.valueOf(bean.getId()) + "-" + bean.getSponsor() + "-" + bean.getOperator() + "-" + bean.getCity());
+                        nodeListId.add(String.valueOf(bean.getId()) + "-" + bean.getSponsor() + "-" + bean.getOperator() + "-" + bean.getCity() + "-" + bean.getDelay() + "-" + (bean.getLimitNodeType() == 1? "限制节点": "正常节点"));
+                    }
+                    mArrayAdapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onError(SdkThrowable throwable) {
+                Toast.makeText(NonUIActivity.this, String.valueOf(throwable.code), Toast.LENGTH_SHORT).show();
+            }
+        }, new GetNodeDelayCallback() {
+            @Override
+            public void onResult(NodeListBean nodeBean) {
+                Log.e("NodeDelay", nodeBean.toString());
+                for (NodeListBean bean : mNodeListBeans) {
+                    if (bean.equals(nodeBean)) {
+                        bean.setDelay(nodeBean.getDelay());
+                    }
+                }
+                if (!CollectionUtil.isEmpty(mNodeListBeans)) {
+                    nodeListId.clear();
+                    for (NodeListBean bean : mNodeListBeans) {
+                        nodeListId.add(String.valueOf(bean.getId()) + "-" + bean.getSponsor() + "-" + bean.getOperator() + "-" + bean.getCity() +
+                                "-" + bean.getDelay() + "-" + (bean.getLimitNodeType() == 1? "限制节点": "正常节点"));
                     }
                     mArrayAdapter.notifyDataSetChanged();
                 }
@@ -268,28 +420,6 @@ public class NonUIActivity extends AppCompatActivity {
 
             @Override
             public void onError(SdkThrowable throwable) {
-                Toast.makeText(NonUIActivity.this, throwable.code + "", Toast.LENGTH_SHORT).show();
-            }
-        }, new GetNodeDelayCallback() {
-            @Override
-            public void onResult(NodeListBean nodeListBean) {
-                Log.e("NodeDelay", nodeListBean.toString());
-                for (NodeListBean bean : mNodeListBeans) {
-                    if (bean.equals(nodeListBean)) {
-                        bean.setDelay(nodeListBean.getDelay());
-                    }
-                }
-                if (!CollectionUtil.isEmpty(mNodeListBeans)) {
-                    nodeListId.clear();
-                    for (NodeListBean bean : mNodeListBeans) {
-                        nodeListId.add(String.valueOf(bean.getId()) + "-" + bean.getSponsor() + "-" + bean.getOperator() + "-" + bean.getCity() + "-" + bean.getDelay());
-                    }
-                    mArrayAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onError(SdkThrowable sdkThrowable) {
 
             }
         });
@@ -300,18 +430,25 @@ public class NonUIActivity extends AppCompatActivity {
     private PingCallback pingCallback = new PingCallback() {
         @Override
         public void onResult(PingResultData pingResultData) {
+            switch (mUnit) {
+                case Mbitps:
+                    speedUnitStr = "Mbps";
+                    break;
+                case MBps:
+                    speedUnitStr = "MB/s";
+                    break;
+                case KBps:
+                    speedUnitStr = "kB/s";
+                    break;
+            }
+
             mPingResultData = pingResultData;
             Message msg = mHandler.obtainMessage();
             mHandler.sendEmptyMessage(0);
-            //editPingText.setText("Ping Result:---------------------"+"\n");
-            //LogUtil.e("Ping Result:" + pingResultData.toString());
-            //editPingText.setText(pingResultData.toString());
-
         }
 
         @Override
         public void onError(SdkThrowable throwable) {
-            //editPingText.setText("Ping Occur Error:---------------------"+"\n"+throwable.getMessage());
             Message msg = mHandler.obtainMessage();
             msg.obj = throwable;
             msg.what = 1;
@@ -320,7 +457,6 @@ public class NonUIActivity extends AppCompatActivity {
 
         @Override
         public void onPckLoss(double pckLoss) {
-            //editPingText.append("丢包：-----------" + pckLoss +"\n");
             Message msg = mHandler.obtainMessage();
             msg.what = 2;
             msg.obj = pckLoss;
@@ -328,10 +464,10 @@ public class NonUIActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onProcessState(SpeedtestState speedtestState) {
+        public void onProcessState(SpeedtestState state) {
             Message msg = mHandler.obtainMessage();
             msg.what = 13;
-            msg.obj = speedtestState;
+            msg.obj = state;
             mHandler.sendMessage(msg);
         }
     };
@@ -340,14 +476,12 @@ public class NonUIActivity extends AppCompatActivity {
 
         @Override
         public void onStart() {
-            //editText.setText("Start SpeedTest Download:---------------------"+"\n");
             Message msg = mHandler.obtainMessage();
             mHandler.sendEmptyMessage(3);
         }
 
         @Override
         public void onProcess(double mbps) {
-            //editText.append(mbps + "\n");
             downCount++;
             downList.add(mbps);
             Message msg = mHandler.obtainMessage();
@@ -358,7 +492,6 @@ public class NonUIActivity extends AppCompatActivity {
 
         @Override
         public void onEnd(double mbps, double flow) {
-            //editText.setText("End SpeedTest Download:---------------------次数："+ downCount +"\n"+ mbps);
             Message msg = mHandler.obtainMessage();
             msg.what = 5;
             msg.obj = mbps + "使用流量：" + flow + "MB";
@@ -367,7 +500,6 @@ public class NonUIActivity extends AppCompatActivity {
 
         @Override
         public void onError(SdkThrowable throwable) {
-            //editText.setText("SpeedTest Download Occur Error:---------------------"+"\n");
             Message msg = mHandler.obtainMessage();
             msg.what = 6;
             msg.obj = throwable;
@@ -379,14 +511,12 @@ public class NonUIActivity extends AppCompatActivity {
 
         @Override
         public void onStart() {
-            //editUploadText.setText("Start SpeedTest Upload:---------------------"+"\n");
             Message msg = mHandler.obtainMessage();
             mHandler.sendEmptyMessage(7);
         }
 
         @Override
         public void onProcess(double mbps) {
-            //editUploadText.append(mbps + "\n");
             upCount++;
             Message msg = mHandler.obtainMessage();
             msg.what = 8;
@@ -396,7 +526,6 @@ public class NonUIActivity extends AppCompatActivity {
 
         @Override
         public void onEnd(double mbps, double flow) {
-            //editUploadText.setText("End SpeedTest Upload:---------------------次数：" + upCount +"\n"+mbps);
             Message msg = mHandler.obtainMessage();
             msg.what = 9;
             msg.obj = mbps + "使用流量：" + flow + "MB";
@@ -405,14 +534,12 @@ public class NonUIActivity extends AppCompatActivity {
 
         @Override
         public void onError(SdkThrowable throwable) {
-            //editUploadText.setText("SpeedTest Upload Occur Error:---------------------"+"\n");
             Message msg = mHandler.obtainMessage();
             msg.what = 10;
             msg.obj = throwable;
             mHandler.sendMessage(msg);
         }
     };
-
 
     @Override
     protected void onDestroy() {
@@ -432,7 +559,7 @@ public class NonUIActivity extends AppCompatActivity {
                     editPingText.setText("Ping Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code);
                     break;
                 case 2:
-                    editPingLossText.setText("丢包：>>>>>>>" + msg.obj.toString() +"\n");
+                    editPingLossText.setText("丢包：-----------：" + msg.obj.toString() +"\n");
                     break;
                 case 3:
                     editDownloadText.setText("Start SpeedTest Download:---------------------"+"\n");
@@ -442,8 +569,8 @@ public class NonUIActivity extends AppCompatActivity {
                     break;
                 case 5:
                     editDownloadText.setText("End SpeedTest Download:---------------------次数：" +
-                        ""+ downCount +"\n" + "平均下载速度" + speedUnitStr + ":" + msg.obj.toString()
-                        + "最高下载速度" + speedUnitStr + ":" + Collections.max(downList));
+                            ""+ downCount +"\n" + "平均下载速度" + speedUnitStr + ":" + msg.obj.toString()
+                            + "最高下载速度" + speedUnitStr + ":" + Collections.max(downList));
                     break;
                 case 6:
                     editDownloadText.setText("Download Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code);
@@ -463,11 +590,11 @@ public class NonUIActivity extends AppCompatActivity {
                 case 11:
                     SpeedExtraData extraData = (SpeedExtraData)msg.obj;
                     tvSpeedExtraResultText.setText("下载速率峰值：" + extraData.getDownloadCrest() + "  上传速率峰值：" + extraData.getUploadCrest() + "\n"+
-                        "下载忙时时延最大值：" + extraData.getBusyDownloadPingMax() + "  上传忙时时延最大值：" + extraData.getBusyUploadPingMax() + "\n"+
-                        "下载忙时时延最小值：" + extraData.getBusyDownloadPingMin() + "  上传忙时时延最小值：" + extraData.getBusyUploadPingMin()+ "\n" +
-                        "下载忙时时延：" + extraData.getBusyDownloadPing() + "  上传忙时时延：" + extraData.getBusyUploadPing() + "\n"+
-                        "闲时时延最大值：" + extraData.getMaxPing() + "  闲时时延最小值：" + extraData.getMinPing() + "\n"+
-                        "下载忙时抖动：" + extraData.getBusyDownloadJitter() + "  上传忙时抖动：" + extraData.getBusyUploadJitter());
+                            "下载忙时时延最大值：" + extraData.getBusyDownloadPingMax() + "  上传忙时时延最大值：" + extraData.getBusyUploadPingMax() + "\n"+
+                            "下载忙时时延最小值：" + extraData.getBusyDownloadPingMin() + "  上传忙时时延最小值：" + extraData.getBusyUploadPingMin()+ "\n" +
+                            "下载忙时时延：" + extraData.getBusyDownloadPing() + "  上传忙时时延：" + extraData.getBusyUploadPing() + "\n"+
+                            "闲时时延最大值：" + extraData.getMaxPing() + "  闲时时延最小值：" + extraData.getMinPing() + "\n"+
+                            "下载忙时抖动：" + extraData.getBusyDownloadJitter() + "  上传忙时抖动：" + extraData.getBusyUploadJitter());
                     break;
                 case 12:
                     tvSpeedExtraResultText.setText("Download Occur Error:---------------------"+"\n"+((SdkThrowable)msg.obj).code);
@@ -487,6 +614,7 @@ public class NonUIActivity extends AppCompatActivity {
         }
     }
 
+
     private void clearValue() {
         editPingText.setText("");
         editPingLossText.setText("");
@@ -496,5 +624,14 @@ public class NonUIActivity extends AppCompatActivity {
         editProcessStateText.setText("");
         tvSpecialTestResult.setText("");
         downList.clear();
+    }
+
+    private void updateAlgoTypeLabel() {
+        SpeedAlgoType currentType = speedInterface.getSpeedAlgoType();
+        if (currentType == SpeedAlgoType.NATIVE) {
+            tvAlgoType.setText("当前算法：原生算法");
+        } else {
+            tvAlgoType.setText("当前算法：C测速算法");
+        }
     }
 }

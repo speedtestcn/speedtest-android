@@ -4,7 +4,7 @@ android {
     compileSdkVersion project.ext.compileSdkVersion
 
     defaultConfig {
-        applicationId "com.speedtest.combosdk"
+        applicationId "com.speedtest.allsdk"
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
@@ -34,34 +34,36 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation project.ext.androidTestJunit
     androidTestImplementation project.ext.androidTestEspresso
-    implementation 'cn.speedtest:sdk-ui-speedtest:1.1.2'
-//    implementation 'cn.speedtest:sdk-ui-speedtest:1.0.0-SNAPSHOT'
 
-//    implementation files('libs\\sdk-ui-speedtest-1.1.2.aar')
-////
-//    implementation 'androidx.recyclerview:recyclerview:1.1.0'
-//    // gson
-//    implementation 'com.google.code.gson:gson:2.8.5'
-//
-//// okhttp
-//    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
-//
-//// retrofit
-//    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-//
-//// converter
-//    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-//
-//// rx - adapter
-//    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-//
-////rx
-//    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-//    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
-//
-//    //reflection
-//    implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
-//
-//    //OAID
-//    implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
+    implementation files('libs\\speedtest-ui-sdk-release.aar')
+    // gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+
+    // retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+
+    // converter
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    // rx - adapter
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+    //rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.10'
+
+    //reflection
+    implementation 'com.github.ChickenHook:RestrictionBypass:2.2'
+
+    //OAID
+    implementation 'com.github.gzu-liyujiang:Android_CN_OAID:4.2.4'
+
+    //ShadowLayout
+    implementation "com.github.lihangleo2:ShadowLayout:3.3.2"
+
+    //recyclerview 如果app中已添加此处可忽略
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
 }

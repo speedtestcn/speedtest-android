@@ -7,144 +7,203 @@
     tools:context=".MainActivity">
 
     <androidx.core.widget.NestedScrollView
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none">
 
         <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="70dp"
-              android:orientation="horizontal"
-              android:gravity="center_vertical"
-              android:visibility="gone">
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_70"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:visibility="gone">
                 <EditText
-                  android:id="@+id/et_hold_value"
-                  android:layout_width="100dp"
-                  android:layout_height="wrap_content"
-                  android:hint="下载阈值mbps"
-                  android:textSize="12sp"
-                  android:layout_marginLeft="16dp"
-                  />
+                    android:id="@+id/et_hold_value"
+                    android:layout_width="@dimen/margin_100"
+                    android:layout_height="wrap_content"
+                    android:hint="下载阈值mbps"
+                    android:textSize="@dimen/txt_12"
+                    android:layout_marginLeft="@dimen/txt_16"
+                    />
                 <Switch
-                  android:id="@+id/switch_auto_speed"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="自动重新测速"/>
+                    android:id="@+id/switch_auto_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="自动重新测速"/>
                 <Switch
-                  android:id="@+id/switch_fast_speed"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="快速测速"/>
+                    android:id="@+id/switch_fast_speed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="快速测速"
+                    android:visibility="gone"/>
             </LinearLayout>
 
             <Spinner
-              android:id="@+id/spinner_select_node"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              />
-            <Button
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/btn_start_mbps"
-              android:text="开始测速(单位Mbps)"></Button>
+                android:id="@+id/spinner_select_node"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                />
+            <Spinner
+                android:id="@+id/spinner_speed_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:layout_marginTop="8dp">
+                <Switch
+                    android:id="@+id/switch_algo_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="使用C测速算法"/>
+                <TextView
+                    android:id="@+id/tv_algo_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text="当前算法：原生算法"
+                    android:textColor="#FF6200EE"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/et_download_duration"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:inputType="number"
+                    android:hint="下载[5000, 15000]"/>
+                <EditText
+                    android:id="@+id/et_upload_duration"
+                    android:layout_width="150dp"
+                    android:layout_height="60dp"
+                    android:inputType="number"
+                    android:hint="上传[5000, 15000]"/>
+                <Button
+                    android:id="@+id/bt_set_duration"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:text="设置"/>
+            </LinearLayout>
 
             <Button
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/btn_start_mbs"
-              android:text="开始测速(单位Mb/s)"></Button>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_start_mbps"
+                android:text="开始测速(单位Mbps)"
+                android:textAllCaps="false"></Button>
 
             <Button
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/btn_start_kbs"
-              android:text="开始测速(单位Kb/s)"></Button>
-            <Button
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/btn_add_nodes"
-              android:text="点击增加测速节点页数"></Button>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_start_mbs"
+                android:text="开始测速(单位MB/s)"
+                android:textAllCaps="false"></Button>
 
             <Button
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/btn_abort"
-              android:text="Stop Speed Test"></Button>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_start_kbs"
+                android:text="开始测速(单位kB/s)"
+                android:textAllCaps="false"></Button>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_add_nodes"
+                android:text="点击增加测速节点页数"></Button>
 
             <Button
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:id="@+id/btn_get_ip"
-              android:text="获取IP/ISP"></Button>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_abort"
+                android:text="Stop Speed Test"
+                android:textAllCaps="false"></Button>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_getip"
+                android:text="获取ip和运营商"
+                android:textAllCaps="false"></Button>
 
             <TextView
-              android:id="@+id/tv_sdk_version"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+                android:id="@+id/tv_sdk_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/tv_ip_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
 
             <TextView
-              android:id="@+id/tv_ip_info"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="@dimen/margin_10"/>
+                android:id="@+id/edt_select_node"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
+            <TextView
+                android:id="@+id/edt_ping_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/edt_process_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <TextView
+                android:id="@+id/edt_ping_loss_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
 
             <TextView
-              android:id="@+id/edt_select_node"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
+                android:id="@+id/tv_speed_extra_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
 
-              />
-            <TextView
-              android:id="@+id/edt_ping_result"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-
-              />
+                />
 
             <TextView
-              android:id="@+id/edt_process_state"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              />
+                android:id="@+id/edt_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:textIsSelectable="true"
+                android:layout_marginTop="@dimen/margin_10"
+                />
 
             <TextView
-              android:id="@+id/edt_ping_loss_result"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-
-              />
-            <TextView
-              android:id="@+id/tv_speed_extra_result"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-
-              />
-            <TextView
-              android:id="@+id/edt_result"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:scrollbars="vertical"
-              android:textIsSelectable="true"
-              />
-            <TextView
-              android:id="@+id/edt_upload_result"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
-              />
+                android:id="@+id/edt_upload_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                />
 
             <TextView
-              android:id="@+id/tv_special_test_result"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="10dp"
-              />
+                android:id="@+id/tv_special_test_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                />
 
         </LinearLayout>
 
